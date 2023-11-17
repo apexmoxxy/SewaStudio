@@ -22,14 +22,11 @@ import com.example.sewastudio.model.User
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePage(navController: NavController, modifier: Modifier = Modifier) {
-    var username by remember { mutableStateOf(TextFieldValue("")) }
-    var password by remember { mutableStateOf(TextFieldValue("")) }
-    var userList by remember { mutableStateOf<List<User>?>(null) }
-
-    UserController.getUsers { fetchedUserList ->
-        userList = fetchedUserList
+    val studioList = remember {
+        listOf(
+            RuangItem("Ruang Foto 1", "deskripsi studio", )
+        )
     }
-
     Scaffold (
         topBar = {
             TopAppBar(
@@ -49,9 +46,7 @@ fun HomePage(navController: NavController, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            userList?.forEach{user: User ->
-                Text(text = user.username)
-            }
+
         }
     }
 }
