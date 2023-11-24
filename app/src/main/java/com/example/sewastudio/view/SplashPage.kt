@@ -59,14 +59,8 @@ import com.example.sewastudio.model.User
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthPage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
+fun SplashPage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     val preferencesManager = remember { PreferencesManager(context = context) }
-    var username by remember { mutableStateOf(TextFieldValue("")) }
-    var password by remember { mutableStateOf(TextFieldValue("")) }
-    var email by remember {mutableStateOf(TextFieldValue(""))}
-    var userList by remember { mutableStateOf<List<User>?>(null) }
-    var passwordVisibility by remember { mutableStateOf(false) }
-    var isLogin by remember { mutableStateOf(true) }
 
     Scaffold (
         topBar = {
@@ -83,8 +77,8 @@ fun AuthPage(navController: NavController, modifier: Modifier = Modifier, contex
                 .padding(innerPadding)
                 .fillMaxSize()
                 .background(Color.Gray)
-                .padding(30.dp)
-                .size(10.dp, 10.dp)
+                .padding(50.dp)
+                .size(30.dp, 30.dp)
 
         ){
             Column(
@@ -97,12 +91,11 @@ fun AuthPage(navController: NavController, modifier: Modifier = Modifier, contex
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top,
             ) {
-                Text(text = if (isLogin) "Login" else "Register", modifier = Modifier
+                Text(text = "SewaStudio", modifier = Modifier
                     .padding(25.dp)
                     ,fontSize = 40.sp
                     , fontFamily = FontFamily.SansSerif
                     , fontStyle = FontStyle.Normal
-
                 )
                 Column(
                     modifier = Modifier
@@ -111,76 +104,6 @@ fun AuthPage(navController: NavController, modifier: Modifier = Modifier, contex
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    OutlinedTextField(
-                        value = username,
-                        onValueChange = { newText -> username = newText },
-                        label = {
-                            Text(
-                                text = "Username",
-                            )
-                        },
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp)
-                    )
-                    if (!isLogin) {
-                        OutlinedTextField(
-                            value = email,
-                            onValueChange = { newText -> email = newText },
-                            label = {
-                                Text(
-                                    text = "Email",
-                                )
-                            },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 8.dp)
-                        )
-                    }
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { newText -> password = newText },
-                        label = { Text("Password") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password
-                        ),
-                        trailingIcon = {
-                            IconButton(
-                                onClick = { passwordVisibility = !passwordVisibility }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.AddCircle,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                    )
-                    Button(
-                        onClick = {
-                            if (isLogin) {
-                                AuthController.login(username.text, password.text, navController, preferencesManager) {}
-                            } else {
-                                AuthController.register(email.text, username.text, password.text, navController, preferencesManager) {}
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(text = if (isLogin) "Login" else "Register")
-                    }
-                    ClickableText(
-                        text = AnnotatedString(if (isLogin) "Don't have an account?" else "Already registered?"),
-                        onClick = {
-                            isLogin = !isLogin
-                        },
-                    )
                 }
             }
         }

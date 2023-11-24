@@ -18,17 +18,15 @@ class UserController {
             userService.getUsers().enqueue(object : Callback<List<User>> {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>): Unit =
                     if (response.isSuccessful) {
-                        println(response.body())
+//                        println(response.body())
                         callback(response.body())
                     } else {
-                        // Handle error
-                        println("Empty")
+//                        println("Empty")
                         callback(null)
                     }
 
                 override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    // Handle failure
-                    println(t)
+//                    println(t)
                     callback(null)
                 }
             })
