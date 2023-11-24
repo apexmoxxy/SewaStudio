@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
             var password = sharedPreferences.getString("password", "")
 
             val loginComplete = remember { mutableStateOf(false) }
+//            cek login secara otomatis apabila terdapat username dan password dari session sebelumnya.
 
             if (!loginComplete.value) {
                 if (username != null && password != null){
