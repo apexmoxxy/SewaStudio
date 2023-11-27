@@ -28,9 +28,11 @@ class AuthController {
                         prefMan.saveData("userID", userID)
                         prefMan.saveData("username", username)
                         prefMan.saveData("password", password)
+                        println("Succesful login")
                         navController.navigate("homepage")
                     } else {
                         println("Unsuccesful login")
+                        navController.navigate("auth-page")
                         callback(null)
                     }
 
@@ -52,8 +54,10 @@ class AuthController {
                         prefMan.saveData("username", username)
                         prefMan.saveData("password", password)
                         navController.navigate("homepage")
+                        println("Succesful register")
                     } else {
                         println("Unsuccesful register")
+                        navController.navigate("auth-page")
                         callback(null)
                     }
 
