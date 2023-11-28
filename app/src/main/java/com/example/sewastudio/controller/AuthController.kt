@@ -42,8 +42,8 @@ class AuthController {
                 }
             })
         }
-        fun register(email : String, username : String, password: String, navController: NavController, prefMan: PreferencesManager,  callback: (Auth?) -> Unit) {
-            authService.register(RegisterData(email, username, password)).enqueue(object : Callback<Auth> {
+        fun register(email : String, username : String, password: String, role: String, navController: NavController, prefMan: PreferencesManager,  callback: (Auth?) -> Unit) {
+            authService.register(RegisterData(email, username, password, role)).enqueue(object : Callback<Auth> {
                 override fun onResponse(call: Call<Auth>, response: Response<Auth>): Unit =
                     if (response.isSuccessful) {
                         val respBody = response.body()!!

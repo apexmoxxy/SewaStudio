@@ -46,6 +46,8 @@ class MainActivity : ComponentActivity() {
                             loginComplete.value = true
                         }
                     }
+                } else {
+                    navController.navigate("auth-page")
                 }
             }
 

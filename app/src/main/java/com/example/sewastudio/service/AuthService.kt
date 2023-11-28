@@ -6,7 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 data class LoginData (val identifier:String, val password: String)
-data class RegisterData (val email:String, val username:String, val password: String)
+data class RegisterData (val email:String, val username:String, val password: String, val status: String)
 interface AuthService {
     @POST("auth/local")
     fun login(@Body body: LoginData) : Call<Auth>

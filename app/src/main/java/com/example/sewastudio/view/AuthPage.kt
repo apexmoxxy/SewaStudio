@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -67,6 +69,8 @@ fun AuthPage(navController: NavController, modifier: Modifier = Modifier, contex
     var userList by remember { mutableStateOf<List<User>?>(null) }
     var passwordVisibility by remember { mutableStateOf(false) }
     var isLogin by remember { mutableStateOf(true) }
+    val roleOptions = listOf("Pelanggan","Pemilik")
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(roleOptions[1]) }
 
     Scaffold (
         topBar = {
@@ -162,12 +166,26 @@ fun AuthPage(navController: NavController, modifier: Modifier = Modifier, contex
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
                     )
+                    if (!isLogin) {
+                        Row {
+                            roleOptions.forEach { text -> Row {
+                                Row (verticalAlignment = Alignment.CenterVertically){
+                                    RadioButton(selected = (text == selectedOption), onClick = {
+                                        onOptionSelected(text)
+                                    })
+                                    Text(
+                                        text = text,
+                                    )
+                                }
+                            } }
+                        }
+                    }
                     Button(
                         onClick = {
                             if (isLogin) {
                                 AuthController.login(username.text, password.text, navController, preferencesManager) {}
                             } else {
-                                AuthController.register(email.text, username.text, password.text, navController, preferencesManager) {}
+                                AuthController.register(email.text, username.text, password.text, selectedOption, navController, preferencesManager) {}
                             }
                         },
                         modifier = Modifier
