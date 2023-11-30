@@ -21,8 +21,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.sewastudio.ui.theme.SewaStudioTheme
 import com.example.sewastudio.view.AuthPage
-import com.example.sewastudio.view.HomePage
 import com.example.sewastudio.view.SplashPage
+import com.example.sewastudio.view.karyawan.KaryawanHomePage
+import com.example.sewastudio.view.pelanggan.PelangganHomePage
+import com.example.sewastudio.view.pemilik.CreateStudioPage
+import com.example.sewastudio.view.pemilik.PemilikHomePage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,8 +68,17 @@ class MainActivity : ComponentActivity() {
                 composable(route = "auth-page") {
                     AuthPage(navController)
                 }
-                composable(route = "homepage") {
-                    HomePage(navController)
+                composable(route = "pelangganhomepage") {
+                    PelangganHomePage(navController)
+                }
+                composable(route = "karyawan") {
+                    KaryawanHomePage(navController)
+                }
+                composable(route = "pemilikhomepage") {
+                    PemilikHomePage(navController)
+                }
+                composable(route = "createstudiopage") {
+                    CreateStudioPage(navController)
                 }
             }
         }

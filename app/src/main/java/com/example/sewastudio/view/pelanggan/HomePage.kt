@@ -105,7 +105,7 @@ fun PelangganHomePage(navController: NavController, modifier: Modifier = Modifie
                         .width(1.dp)
                 ) {
                     Text(
-                        text = "Book Now!",
+                        text = "Log Out",
                         style = TextStyle(
                             fontSize = 18.sp,
                             fontWeight = FontWeight(600),

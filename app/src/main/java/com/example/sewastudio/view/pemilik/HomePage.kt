@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.controller.AuthController
 import com.example.sewastudio.controller.UserController
@@ -39,6 +42,13 @@ fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier,
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                GoTo("createstudiopage", navController, preferencesManager)
+            }) {
+                Icon(Icons.Default.Add, contentDescription = "Add")
+            }
         },
     ){ innerPadding ->
         Column(
