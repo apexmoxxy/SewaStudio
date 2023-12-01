@@ -1,13 +1,16 @@
 package com.example.sewastudio.view.pemilik
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
@@ -26,14 +29,22 @@ import androidx.navigation.NavController
 import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.controller.AuthController
+import com.example.sewastudio.controller.StudioController
 import com.example.sewastudio.controller.UserController
+import com.example.sewastudio.model.Studio
 import com.example.sewastudio.model.User
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     val preferencesManager = remember { PreferencesManager(context = context) }
-
+    var studios by remember { mutableStateOf<List<Studio>?>(null) }
+    //    println(studioList)
     Scaffold (
         topBar = {
             TopAppBar(
@@ -59,6 +70,31 @@ fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
+            LazyColumn{
+                StudioController.getStudios { response ->
+                    studios = response?.data
+                }
+            }
+            LazyColumn{
+                studios?.forEach { studio ->
+                    item {
+                        Row (modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Text(text = studio.attributes.name)
+                            ElevatedButton(onClick = {
+                            }) {
+                                Text("Edit")
+                            }
+                            ElevatedButton(onClick = {
+
+                            }) {
+                                Text("Delete")
+                            }
+                        }
+                    }
+                }
+            }
             Button(
                 onClick = {
                     AuthController.logout(navController, preferencesManager)

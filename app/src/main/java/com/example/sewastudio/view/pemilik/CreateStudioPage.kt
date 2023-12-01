@@ -49,14 +49,14 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
     val preferencesManager = remember { PreferencesManager(context = context) }
     var studioname by remember { mutableStateOf(TextFieldValue("")) }
     var userID = sharedPreferences.getString("userID","")
+    val prevPage = preferencesManager.getData("previousPage")
 
     Scaffold (
         topBar = {
             TopAppBar(
                 title = {Button(
                     onClick = {
-                        val prefPage = preferencesManager.getData("previousPage")
-                        GoTo(prefPage, navController, preferencesManager)
+                        GoTo(prevPage, navController, preferencesManager)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -117,24 +117,11 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
                             .padding(bottom = 8.dp)
                     )
 
-//                    if (!isLogin) {
-//                        Row {
-//                            roleOptions.forEach { text -> Row {
-//                                Row (verticalAlignment = Alignment.CenterVertically){
-//                                    RadioButton(selected = (text == selectedOption), onClick = {
-//                                        onOptionSelected(text)
-//                                    })
-//                                    Text(
-//                                        text = text,
-//                                    )
-//                                }
-//                            } }
-//                        }
-//                    }
                     Button(
                         onClick = {
                             StudioController.insertStudio(studioname.text, userID!!.toInt()){
                                 studio ->  if (studio != null) {
+                                    GoTo(prevPage, navController, preferencesManager)
                                     println(studio.id)
                                 }
                             }
