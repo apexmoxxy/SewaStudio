@@ -166,26 +166,26 @@ fun AuthPage(navController: NavController, modifier: Modifier = Modifier, contex
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
                     )
-                    if (!isLogin) {
-                        Row {
-                            roleOptions.forEach { text -> Row {
-                                Row (verticalAlignment = Alignment.CenterVertically){
-                                    RadioButton(selected = (text == selectedOption), onClick = {
-                                        onOptionSelected(text)
-                                    })
-                                    Text(
-                                        text = text,
-                                    )
-                                }
-                            } }
-                        }
-                    }
+//                    if (!isLogin) {
+//                        Row {
+//                            roleOptions.forEach { text -> Row {
+//                                Row (verticalAlignment = Alignment.CenterVertically){
+//                                    RadioButton(selected = (text == selectedOption), onClick = {
+//                                        onOptionSelected(text)
+//                                    })
+//                                    Text(
+//                                        text = text,
+//                                    )
+//                                }
+//                            } }
+//                        }
+//                    }
                     Button(
                         onClick = {
                             if (isLogin) {
                                 AuthController.login(username.text, password.text, navController, preferencesManager) {}
                             } else {
-                                AuthController.register(email.text, username.text, password.text, selectedOption, navController, preferencesManager) {}
+                                AuthController.register(email.text, username.text, password.text, navController, preferencesManager) {}
                             }
                         },
                         modifier = Modifier

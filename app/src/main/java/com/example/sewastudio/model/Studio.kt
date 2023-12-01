@@ -1,12 +1,28 @@
 package com.example.sewastudio.model
 
-class Studio {
-    var id : Int = 0
-    var deskripsi : String = ""
-    var nomorRuang : String = ""
+import com.google.gson.annotations.SerializedName
 
-    constructor(desc: String, nomor: String) {
-        deskripsi = desc
-        nomorRuang = nomor
-    }
+
+class Studio {
+    @SerializedName("id")
+    var id: Int = 0
+    @SerializedName("attributes")
+    var attributes: StudioAttributes = StudioAttributes()
 }
+
+class StudioAttributes{
+    @SerializedName("name")
+    var name: String = ""
+    @SerializedName("createdAt")
+    var createdAt: String = ""
+    @SerializedName("updatedAt")
+    var updatedAt: String = ""
+    @SerializedName("publishedAt")
+    var publishedAt: String = ""
+    @SerializedName("available")
+    var available: Any? = null
+}
+data class StudioResponse<T>(
+    @SerializedName("data")
+    val data: T?
+)
