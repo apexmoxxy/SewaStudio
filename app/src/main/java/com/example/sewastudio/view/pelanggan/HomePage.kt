@@ -96,6 +96,30 @@ fun PelangganHomePage(navController: NavController, modifier: Modifier = Modifie
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                Box(
+                    modifier = Modifier
+                        .size(300.dp)
+                        .clip(shape = RoundedCornerShape(8.dp))
+                        .background(Color.Gray)
+                ) {
+//                    Image(
+//                        painter = , contentDescription =
+//                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "Deskripsi Studio 2",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF1E1E1E)
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 Button(
                     onClick = {
                         AuthController.logout(navController, preferencesManager)
@@ -111,7 +135,8 @@ fun PelangganHomePage(navController: NavController, modifier: Modifier = Modifie
                             fontWeight = FontWeight(600),
                             color = Color(0xFF000000)
                         )
-                    ) }
+                    )
+                }
             }
         }
     }
