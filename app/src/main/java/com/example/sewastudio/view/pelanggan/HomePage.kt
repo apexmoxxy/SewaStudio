@@ -25,7 +25,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -36,6 +38,7 @@ import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.controller.AuthController
 import com.example.sewastudio.controller.UserController
 import com.example.sewastudio.model.User
+import com.example.sewastudio.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,9 +81,14 @@ fun PelangganHomePage(navController: NavController, modifier: Modifier = Modifie
                         .clip(shape = RoundedCornerShape(8.dp))
                         .background(Color.Gray)
                 ) {
-//                    Image(
-//                        painter = , contentDescription =
-//                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.ruangstudiosatu),
+                        contentDescription = "Studiosatu",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        contentScale = ContentScale.Crop
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -102,9 +110,14 @@ fun PelangganHomePage(navController: NavController, modifier: Modifier = Modifie
                         .clip(shape = RoundedCornerShape(8.dp))
                         .background(Color.Gray)
                 ) {
-//                    Image(
-//                        painter = , contentDescription =
-//                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.ruangstudioduwa),
+                        contentDescription = "Studioduwa",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        contentScale = ContentScale.Crop
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
