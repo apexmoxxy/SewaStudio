@@ -1,7 +1,7 @@
 package com.example.sewastudio.controller
 
+import com.example.sewastudio.model.ApiResponse
 import com.example.sewastudio.model.Studio
-import com.example.sewastudio.model.StudioResponse
 import com.example.sewastudio.service.AuthService
 import com.example.sewastudio.service.StudioBody
 import com.example.sewastudio.service.StudioData
@@ -34,9 +34,9 @@ class StudioController {
                 }
             })
         }
-        fun getStudios(callback: (StudioResponse<List<Studio>>?) -> Unit){
-            studioService.getall().enqueue(object : Callback<StudioResponse<List<Studio>>> {
-                override fun onResponse(call: Call<StudioResponse<List<Studio>>>, response: Response<StudioResponse<List<Studio>>>): Unit =
+        fun getStudios(callback: (ApiResponse<List<Studio>>?) -> Unit){
+            studioService.getall().enqueue(object : Callback<ApiResponse<List<Studio>>> {
+                override fun onResponse(call: Call<ApiResponse<List<Studio>>>, response: Response<ApiResponse<List<Studio>>>): Unit =
                     if (response.isSuccessful) {
 //                        println(response.body())
                         callback(response.body())
@@ -45,11 +45,15 @@ class StudioController {
                         callback(null)
                     }
 
-                override fun onFailure(call: Call<StudioResponse<List<Studio>>>, t: Throwable) {
+                override fun onFailure(call: Call<ApiResponse<List<Studio>>>, t: Throwable) {
 //                    println(t)
                     callback(null)
                 }
             })
+        }
+
+        fun searchStudio(search: String, callback: (ApiResponse<List<Studio?>>)-> Unit){
+            
         }
     }
 }

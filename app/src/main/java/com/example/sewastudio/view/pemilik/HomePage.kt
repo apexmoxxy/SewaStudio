@@ -74,8 +74,7 @@ fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier,
                 StudioController.getStudios { response ->
                     studios = response?.data
                 }
-            }
-            LazyColumn{
+
                 studios?.forEach { studio ->
                     item {
                         Row (modifier = Modifier

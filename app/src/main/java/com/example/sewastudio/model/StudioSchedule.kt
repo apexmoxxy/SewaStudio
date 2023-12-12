@@ -1,20 +1,20 @@
 package com.example.sewastudio.model
 
 import com.google.gson.annotations.SerializedName
-
-
-class Studio {
+class StudioSchedule {
     @SerializedName("id")
     var id: Int = 0
     @SerializedName("attributes")
-    var attributes: StudioAttributes = StudioAttributes()
+    var attributes: ScheduleAttributes = ScheduleAttributes()
 }
 
-class StudioAttributes{
+class ScheduleAttributes {
     @SerializedName("name")
     var name: String = ""
-    @SerializedName("ownerID")
-    var ownerID: ApiResponse<User> = ApiResponse<User>()
+    @SerializedName("studioID")
+    var studioID: ApiResponse<Studio>? = ApiResponse<Studio>()
+    @SerializedName("studiodate")
+    var studioDate: String = ""
     @SerializedName("createdAt")
     var createdAt: String = ""
     @SerializedName("updatedAt")

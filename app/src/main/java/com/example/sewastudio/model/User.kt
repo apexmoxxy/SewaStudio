@@ -14,4 +14,6 @@ class User {
     var updatedAt: String = ""
     @SerializedName("status")
     var status: UserRole = UserRole.Pelanggan
+    @SerializedName("studioID")
+    var studioID: Studio? = null
 }

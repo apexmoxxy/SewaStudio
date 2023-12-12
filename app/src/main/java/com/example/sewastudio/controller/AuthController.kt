@@ -37,13 +37,14 @@ class AuthController {
                 override fun onResponse(call: Call<Auth>, response: Response<Auth>): Unit =
                     if (response.isSuccessful) {
                         val respBody = response.body()!!
+
                         val jwt = respBody.jwt
                         val respUser = respBody.user!!
                         val userID = respUser.id.toString()
                         val role = respUser.status
                         prefMan.saveData("jwt", jwt)
-                        prefMan.saveData("userID", userID)
-                        prefMan.saveData("username", username)
+                            prefMan.saveData("userID", userID)
+                            prefMan.saveData("username", username)
                         prefMan.saveData("password", password)
                         println(role)
                         println("Succesful login")
