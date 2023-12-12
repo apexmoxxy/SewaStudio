@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.sewastudio"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.sewastudio"
@@ -47,10 +47,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
+    implementation("androidx.compose.material3:material3-android:1.2.0-alpha12")
     val navVersion = "2.6.0"
+    implementation ("com.google.accompanist:accompanist-datetime:0.20.0")
+
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.navigation:navigation-compose:$navVersion")
     implementation("com.squareup.retrofit2:retrofit:2.4.0")
@@ -70,4 +74,5 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
 }
