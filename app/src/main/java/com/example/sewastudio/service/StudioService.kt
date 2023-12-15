@@ -9,6 +9,8 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
+
 data class StudioData(
     @SerializedName("data")
     val data: StudioBody
@@ -25,5 +27,6 @@ interface StudioService {
     fun insert(@Body body: StudioData): Call<Studio>
 
     @GET("studios")
-    fun getall() : Call<ApiResponse<List<Studio>>>
+    fun getall(@Query("filters[ownerID]") ownerID: String?) : Call<ApiResponse<List<Studio>>>
+
 }

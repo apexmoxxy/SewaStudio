@@ -44,6 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     val preferencesManager = remember { PreferencesManager(context = context) }
     var studios by remember { mutableStateOf<List<Studio>?>(null) }
+    val userID = preferencesManager.getData("userID")
     //    println(studioList)
     Scaffold (
         topBar = {
@@ -71,7 +72,7 @@ fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier,
             verticalArrangement = Arrangement.Center,
         ) {
             LazyColumn{
-                StudioController.getStudios { response ->
+                StudioController.getStudios(userID.toInt()) { response ->
                     studios = response?.data
                 }
 

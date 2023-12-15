@@ -34,8 +34,8 @@ class StudioController {
                 }
             })
         }
-        fun getStudios(callback: (ApiResponse<List<Studio>>?) -> Unit){
-            studioService.getall().enqueue(object : Callback<ApiResponse<List<Studio>>> {
+        fun getStudios(userID : Int, callback: (ApiResponse<List<Studio>>?) -> Unit){
+            studioService.getall(userID.toString()).enqueue(object : Callback<ApiResponse<List<Studio>>> {
                 override fun onResponse(call: Call<ApiResponse<List<Studio>>>, response: Response<ApiResponse<List<Studio>>>): Unit =
                     if (response.isSuccessful) {
 //                        println(response.body())
