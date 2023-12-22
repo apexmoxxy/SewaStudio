@@ -127,7 +127,7 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Column 1",
+                                text = "Nama",
                                 style = TextStyle(
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight(500),
@@ -143,7 +143,7 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Column 2",
+                                text = "Email",
                                 style = TextStyle(
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight(500),
@@ -159,7 +159,7 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Column 3",
+                                text = "No. WhatsApp",
                                 style = TextStyle(
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight(500),
