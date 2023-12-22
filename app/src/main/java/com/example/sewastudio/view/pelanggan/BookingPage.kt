@@ -63,24 +63,114 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
             )
         },
     ){ innerPadding->
-        Box(
+        Column(
             modifier = Modifier
-                .shadow(
-                    elevation = 4.dp,
-                    spotColor = Color(0x40000000),
-                    ambientColor = Color(0x40000000)
-                )
-                .width(330.dp)
-                .height(228.dp)
-                .background(color = Color(0xFFFFFFFF))
+                .padding(innerPadding)
+                .fillMaxSize()
         ) {
-            Text(
-                text = "Booking Detaisl\n4 Hour\\n4 Desember 2023\\n09.00 a.m - 13.00 p.m \\n\\nDetail Pembayaran\\n\\nSubtotal 388K\\nTax -\\n---------------------\\nTotal 388K",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight(400),
-                    color = Color(0xFF000000),
+            Box(
+                modifier = Modifier
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
+                    )
+                    .width(330.dp)
+                    .height(228.dp)
+                    .background(color = Color(0xFFFFFFFF))
+            ) {
+                Text(
+                    text = "Booking Details\n4 Hour\n4 Desember 2023\n09.00 a.m - 13.00 p.m\n\nDetail Pembayaran\n\nSubtotal 388K\nTax -\n---------------------\nTotal 388K",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF000000),
+                    )
                 )
-            )
+            }
+
+            Box(
+                modifier = Modifier
+                    .shadow(
+                        elevation = 4.dp,
+                        spotColor = Color(0x40000000),
+                        ambientColor = Color(0x40000000)
+                    )
+                    .width(328.dp)
+                    .height(273.dp)
+                    .background(color = Color(0xFFFFFFFF))
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    // Text above the columns
+                    Text(
+                        text = "Your Text Above Columns",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight(600),
+                            color = Color(0xFF000000),
+                        ),
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+
+                    // Three columns with content
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        // Column 1
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                text = "Column 1",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF000000),
+                                ),
+                                modifier = Modifier.padding(bottom = 4.dp)
+                            )
+                            // Add content for Column 1 if needed
+                        }
+
+                        // Column 2
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                text = "Column 2",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF000000),
+                                ),
+                                modifier = Modifier.padding(bottom = 4.dp)
+                            )
+                            // Add content for Column 2 if needed
+                        }
+
+                        // Column 3
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                text = "Column 3",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF000000),
+                                ),
+                                modifier = Modifier.padding(bottom = 4.dp)
+                            )
+                            // Add content for Column 3 if needed
+                        }
+                    }
+                }
+            }
         }
     }
