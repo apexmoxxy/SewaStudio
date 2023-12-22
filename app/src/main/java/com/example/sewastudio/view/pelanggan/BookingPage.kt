@@ -124,7 +124,15 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                     ) {
                         // Column 1
                         Column(
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier
+                                .shadow(
+                                    elevation = 4.dp,
+                                    spotColor = Color(0x40000000),
+                                    ambientColor = Color(0x40000000)
+                                )
+                                .width(256.dp)
+                                .height(32.dp)
+                                .background(color = Color(0xFFFFFFFF))
                         ) {
                             Text(
                                 text = "Nama",
@@ -140,7 +148,15 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
 
                         // Column 2
                         Column(
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier
+                                .shadow(
+                                    elevation = 4.dp,
+                                    spotColor = Color(0x40000000),
+                                    ambientColor = Color(0x40000000)
+                                )
+                                .width(256.dp)
+                                .height(32.dp)
+                                .background(color = Color(0xFFFFFFFF))
                         ) {
                             Text(
                                 text = "Email",
@@ -156,7 +172,15 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
 
                         // Column 3
                         Column(
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier
+                                .shadow(
+                                    elevation = 4.dp,
+                                    spotColor = Color(0x40000000),
+                                    ambientColor = Color(0x40000000)
+                                )
+                                .width(256.dp)
+                                .height(32.dp)
+                                .background(color = Color(0xFFFFFFFF))
                         ) {
                             Text(
                                 text = "No. WhatsApp",
