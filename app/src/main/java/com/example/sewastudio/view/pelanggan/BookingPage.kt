@@ -46,23 +46,25 @@ import com.example.sewastudio.R
 fun BookingPage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     val preferencesManager = remember { PreferencesManager(context = context) }
 
-    Scaffold (
+    Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(
-                    text = "FortuneSpace",
-                    style = TextStyle(
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight(600),
-                        color = Color(0xFFFFFFFF)
+                title = {
+                    Text(
+                        text = "FortuneSpace",
+                        style = TextStyle(
+                            fontSize = 40.sp,
+                            fontWeight = FontWeight(600),
+                            color = Color(0xFFFFFFFF)
+                        )
                     )
-                ) },
+                },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
             )
-        },
-    ){ innerPadding->
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
@@ -99,6 +101,7 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                     .width(328.dp)
                     .height(273.dp)
                     .background(color = Color(0xFFFFFFFF))
+                    .padding(16.dp)
             ) {
                 Column(
                     modifier = Modifier
@@ -116,14 +119,14 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                     )
 
                     // Three columns with content
-                    Row(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         // Column 1
-                        Column(
+                        Box(
                             modifier = Modifier
                                 .shadow(
                                     elevation = 4.dp,
@@ -141,13 +144,15 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                                     fontWeight = FontWeight(500),
                                     color = Color(0xFF000000),
                                 ),
-                                modifier = Modifier.padding(bottom = 4.dp)
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxSize()
                             )
                             // Add content for Column 1 if needed
                         }
 
                         // Column 2
-                        Column(
+                        Box(
                             modifier = Modifier
                                 .shadow(
                                     elevation = 4.dp,
@@ -165,13 +170,15 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                                     fontWeight = FontWeight(500),
                                     color = Color(0xFF000000),
                                 ),
-                                modifier = Modifier.padding(bottom = 4.dp)
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxSize()
                             )
                             // Add content for Column 2 if needed
                         }
 
                         // Column 3
-                        Column(
+                        Box(
                             modifier = Modifier
                                 .shadow(
                                     elevation = 4.dp,
@@ -189,12 +196,28 @@ fun BookingPage(navController: NavController, modifier: Modifier = Modifier, con
                                     fontWeight = FontWeight(500),
                                     color = Color(0xFF000000),
                                 ),
-                                modifier = Modifier.padding(bottom = 4.dp)
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxSize()
                             )
                             // Add content for Column 3 if needed
                         }
+                    }
+
+                    // Button
+                    Button(
+                        onClick = {
+                            // Action to be performed when the button is clicked
+                            // Navigate to the payment page or perform other actions
+                        },
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Text("Continue to Payment")
                     }
                 }
             }
         }
     }
+}
