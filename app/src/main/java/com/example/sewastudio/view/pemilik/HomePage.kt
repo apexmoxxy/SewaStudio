@@ -29,8 +29,10 @@ import androidx.navigation.NavController
 import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.controller.AuthController
+import com.example.sewastudio.controller.OrderController
 import com.example.sewastudio.controller.StudioController
 import com.example.sewastudio.controller.UserController
+import com.example.sewastudio.model.Order
 import com.example.sewastudio.model.Studio
 import com.example.sewastudio.model.User
 import retrofit2.Call
@@ -44,7 +46,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     val preferencesManager = remember { PreferencesManager(context = context) }
     var studios by remember { mutableStateOf<List<Studio>?>(null) }
+<<<<<<< Updated upstream
+=======
+    var orders by remember { mutableStateOf<List<Order>?>(null) }
+    val userID = preferencesManager.getData("userID")
+    val jwt = preferencesManager.getData("jwt")
+>>>>>>> Stashed changes
     //    println(studioList)
+    OrderController.getOrders(jwt){ response ->
+        orders = response?.data
+    }
+    StudioController.getStudios(jwt, userID.toInt()) { response ->
+        studios = response?.data
+    }
     Scaffold (
         topBar = {
             TopAppBar(
@@ -54,13 +68,26 @@ fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier,
                 ),
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                GoTo("createstudiopage", navController, preferencesManager)
-            }) {
-                Icon(Icons.Default.Add, contentDescription = "Add")
+
+//        floatingActionButton = {
+//            FloatingActionButton(onClick = {
+//                GoTo("createstudiopage", navController, preferencesManager)
+//            }) {
+//                Icon(Icons.Default.Add, contentDescription = "Add")
+//            }
+//        },
+        bottomBar = {
+            BottomAppBar {
+                Button(onClick = { GoTo("createstudiopage", navController, preferencesManager) }) {
+                    Text(text = "Studio")
+                    Icon(Icons.Default.Add, contentDescription = "Add")
+                }
+                Button(onClick = { GoTo("createkaryawanpage", navController, preferencesManager) }) {
+                    Text(text = "Karyawan")
+                    Icon(Icons.Default.Add, contentDescription = "Add")
+                }
             }
-        },
+        }
     ){ innerPadding ->
         Column(
             modifier = Modifier
@@ -71,23 +98,30 @@ fun PemilikHomePage(navController: NavController, modifier: Modifier = Modifier,
             verticalArrangement = Arrangement.Center,
         ) {
             LazyColumn{
+<<<<<<< Updated upstream
                 StudioController.getStudios { response ->
                     studios = response?.data
                 }
             }
             LazyColumn{
+=======
+
+>>>>>>> Stashed changes
                 studios?.forEach { studio ->
                     item {
                         Row (modifier = Modifier
                             .padding(10.dp)
                             .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                             Text(text = studio.attributes.name)
-                            ElevatedButton(onClick = {
+                            Button(onClick = {
+
                             }) {
                                 Text("Edit")
                             }
-                            ElevatedButton(onClick = {
-
+                            Button(onClick = {
+                                StudioController.deleteStudio(jwt, studio.id)
+                                var currentPage = preferencesManager.getData("currentPage")
+                                GoTo(currentPage, navController, preferencesManager)
                             }) {
                                 Text("Delete")
                             }
