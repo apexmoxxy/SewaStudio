@@ -1,16 +1,32 @@
 package com.example.sewastudio.service
 
+<<<<<<< Updated upstream
 import com.example.sewastudio.model.Auth
+=======
+>>>>>>> Stashed changes
 import com.example.sewastudio.model.Studio
 import com.example.sewastudio.model.StudioResponse
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+<<<<<<< Updated upstream
+=======
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import retrofit2.http.Query
+
+>>>>>>> Stashed changes
 data class StudioData(
     @SerializedName("data")
     val data: StudioBody
+)
+
+data class UpdateStudioData(
+    @SerializedName("data")
+    val data: UpdateStudioBody
 )
 
 data class StudioBody(
@@ -19,10 +35,25 @@ data class StudioBody(
     val ownerId: Int
 )
 
+data class UpdateStudioBody(
+    val name: String,
+)
+
 interface StudioService {
     @POST("studios")
     fun insert(@Body body: StudioData): Call<Studio>
-
     @GET("studios")
+<<<<<<< Updated upstream
     fun getall() : Call<StudioResponse<List<Studio>>>
 }
+=======
+    fun getall(@Query("filters[ownerID]") ownerID: String?, @Query("populate") populate: String?) : Call<ApiResponse<List<Studio>>>
+    @GET("studios")
+    fun getstudios() : Call<ApiResponse<List<Studio>>>
+    @PUT("studios/{id}")
+    fun edit(@Path("id") id: Int, @Body body: UpdateStudioData) : Call<ApiResponse<Studio>>
+    @DELETE("studios/{id}")
+    fun delete(@Path("id") id: Int) : Call<ApiResponse<Studio>>
+}
+
+>>>>>>> Stashed changes
