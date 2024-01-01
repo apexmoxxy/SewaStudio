@@ -12,8 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -32,7 +37,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -44,10 +52,13 @@ import com.example.sewastudio.controller.StudioController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
+fun CreateKaryawanPage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     val sharedPreferences: SharedPreferences = LocalContext.current.getSharedPreferences("auth", Context.MODE_PRIVATE)
     val preferencesManager = remember { PreferencesManager(context = context) }
-    var studioname by remember { mutableStateOf(TextFieldValue("")) }
+    var username by remember { mutableStateOf(TextFieldValue("")) }
+    var password by remember { mutableStateOf(TextFieldValue("")) }
+    var email by remember {mutableStateOf(TextFieldValue(""))}
+    var passwordVisibility by remember { mutableStateOf(false) }
     var userID = sharedPreferences.getString("userID","")
     val jwt = preferencesManager.getData("jwt")
     val prevPage = preferencesManager.getData("previousPage")
@@ -90,11 +101,13 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top,
             ) {
-                Text(text = "", modifier = Modifier
-                    .padding(25.dp)
-                    ,fontSize = 40.sp
-                    , fontFamily = FontFamily.SansSerif
-                    , fontStyle = FontStyle.Normal
+                Text(
+                    text = "",
+                    modifier = Modifier
+                        .padding(25.dp),
+                    fontSize = 40.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontStyle = FontStyle.Normal
 
                 )
                 Column(
@@ -105,11 +118,11 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
                     verticalArrangement = Arrangement.Center,
                 ) {
                     OutlinedTextField(
-                        value = studioname,
-                        onValueChange = { newText -> studioname = newText },
+                        value = username,
+                        onValueChange = { newText -> username = newText },
                         label = {
                             Text(
-                                text = "Studio Name",
+                                text = "Username",
                             )
                         },
                         singleLine = true,
@@ -117,20 +130,50 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 8.dp)
                     )
-
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = { newText -> email = newText },
+                        label = {
+                            Text(
+                                text = "Email",
+                            )
+                        },
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp)
+                    )
+                    OutlinedTextField(
+                        value = password,
+                        onValueChange = { newText -> password = newText },
+                        label = { Text("Password") },
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Password
+                        ),
+                        trailingIcon = {
+                            IconButton(
+                                onClick = { passwordVisibility = !passwordVisibility }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.AddCircle,
+                                    contentDescription = null
+                                )
+                            }
+                        },
+                        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                    )
                     Button(
                         onClick = {
-                            StudioController.insertStudio(jwt, studioname.text, userID!!.toInt()){
-                                studio ->  if (studio != null) {
-                                    GoTo("pemilikhomepage", navController, preferencesManager)
-                                    println(studio.id)
-                                }
-                            }
+                            AuthController.registerKaryawan(email.text, username.text, password.text, navController, preferencesManager) {}
                         },
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-                        Text(text = "Add Studio")
+                        Text(text = "Tambahkan Karyawan")
                     }
                 }
             }
