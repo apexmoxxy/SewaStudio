@@ -49,7 +49,6 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
     val preferencesManager = remember { PreferencesManager(context = context) }
     var studioname by remember { mutableStateOf(TextFieldValue("")) }
     var userID = sharedPreferences.getString("userID","")
-    val jwt = preferencesManager.getData("jwt")
     val prevPage = preferencesManager.getData("previousPage")
 
     Scaffold (
@@ -120,9 +119,9 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
 
                     Button(
                         onClick = {
-                            StudioController.insertStudio(jwt, studioname.text, userID!!.toInt()){
+                            StudioController.insertStudio(studioname.text, userID!!.toInt()){
                                 studio ->  if (studio != null) {
-                                    GoTo("pemilikhomepage", navController, preferencesManager)
+                                    GoTo(prevPage, navController, preferencesManager)
                                     println(studio.id)
                                 }
                             }
