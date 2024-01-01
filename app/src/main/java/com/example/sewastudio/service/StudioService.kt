@@ -1,9 +1,6 @@
 package com.example.sewastudio.service
 
-<<<<<<< Updated upstream
-import com.example.sewastudio.model.Auth
-=======
->>>>>>> Stashed changes
+import com.example.sewastudio.model.ApiResponse
 import com.example.sewastudio.model.Studio
 import com.example.sewastudio.model.StudioResponse
 import com.google.gson.annotations.SerializedName
@@ -12,13 +9,10 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
-<<<<<<< Updated upstream
-=======
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
->>>>>>> Stashed changes
 data class StudioData(
     @SerializedName("data")
     val data: StudioBody
@@ -43,10 +37,6 @@ interface StudioService {
     @POST("studios")
     fun insert(@Body body: StudioData): Call<Studio>
     @GET("studios")
-<<<<<<< Updated upstream
-    fun getall() : Call<StudioResponse<List<Studio>>>
-}
-=======
     fun getall(@Query("filters[ownerID]") ownerID: String?, @Query("populate") populate: String?) : Call<ApiResponse<List<Studio>>>
     @GET("studios")
     fun getstudios() : Call<ApiResponse<List<Studio>>>
@@ -56,4 +46,3 @@ interface StudioService {
     fun delete(@Path("id") id: Int) : Call<ApiResponse<Studio>>
 }
 
->>>>>>> Stashed changes

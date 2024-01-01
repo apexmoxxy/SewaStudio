@@ -1,11 +1,8 @@
 package com.example.sewastudio.controller
 
+import com.example.sewastudio.model.ApiResponse
 import com.example.sewastudio.model.Studio
-<<<<<<< Updated upstream
 import com.example.sewastudio.model.StudioResponse
-import com.example.sewastudio.service.AuthService
-=======
->>>>>>> Stashed changes
 import com.example.sewastudio.service.StudioBody
 import com.example.sewastudio.service.StudioData
 import com.example.sewastudio.service.StudioService
@@ -38,17 +35,11 @@ class StudioController {
                 }
             })
         }
-<<<<<<< Updated upstream
-        fun getStudios(callback: (StudioResponse<List<Studio>>?) -> Unit){
-            studioService.getall().enqueue(object : Callback<StudioResponse<List<Studio>>> {
-                override fun onResponse(call: Call<StudioResponse<List<Studio>>>, response: Response<StudioResponse<List<Studio>>>): Unit =
-=======
-        fun getStudios(jwt: String, userID : Int, callback: (ApiResponse<List<Studio>>?) -> Unit){
+        fun getStudios(jwt: String, userID: Int, callback: (ApiResponse<List<Studio>>?) -> Unit){
+            println(jwt)
             var studioService : StudioService = ClientController.getAuthService(StudioService::class.java, jwt)
-
             studioService.getall(userID.toString(),"*").enqueue(object : Callback<ApiResponse<List<Studio>>> {
                 override fun onResponse(call: Call<ApiResponse<List<Studio>>>, response: Response<ApiResponse<List<Studio>>>): Unit =
->>>>>>> Stashed changes
                     if (response.isSuccessful) {
                         println(response.body())
                         callback(response.body())
@@ -57,14 +48,12 @@ class StudioController {
                         callback(null)
                     }
 
-                override fun onFailure(call: Call<StudioResponse<List<Studio>>>, t: Throwable) {
+                override fun onFailure(call: Call<ApiResponse<List<Studio>>>, t: Throwable) {
 //                    println(t)
                     callback(null)
                 }
             })
         }
-<<<<<<< Updated upstream
-=======
         fun getStudios(jwt: String, callback: (ApiResponse<List<Studio>>?) -> Unit){
             println(jwt)
             var studioService : StudioService = ClientController.getAuthService(StudioService::class.java, jwt)
@@ -131,6 +120,5 @@ class StudioController {
         fun searchStudio(jwt: String, search: String, callback: (ApiResponse<List<Studio?>>)-> Unit){
             
         }
->>>>>>> Stashed changes
     }
 }
