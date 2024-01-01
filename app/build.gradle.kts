@@ -53,7 +53,6 @@ android {
 dependencies {
     implementation("androidx.compose.material3:material3-android:1.2.0-alpha12")
     val navVersion = "2.6.0"
-    implementation ("com.google.accompanist:accompanist-datetime:0.20.0")
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.navigation:navigation-compose:$navVersion")
