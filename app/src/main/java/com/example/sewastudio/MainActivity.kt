@@ -2,13 +2,12 @@ package com.example.sewastudio
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -24,33 +23,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sewastudio.controller.AuthController
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import com.example.sewastudio.ui.theme.SewaStudioTheme
-import com.example.sewastudio.view.AuthPage
 import com.example.sewastudio.view.AuthUI
 import com.example.sewastudio.view.SplashPage
 import com.example.sewastudio.view.karyawan.KaryawanHomePage
 import com.example.sewastudio.view.pelanggan.BookingPage
 import com.example.sewastudio.view.pelanggan.HomeUI
-import com.example.sewastudio.view.pelanggan.PelangganHomePage
 import com.example.sewastudio.view.pelanggan.Setting
 import com.example.sewastudio.view.pelanggan.Setting2
 import com.example.sewastudio.view.pemilik.CreateKaryawanPage
 import com.example.sewastudio.view.pemilik.CreateStudioPage
-import com.example.sewastudio.view.pemilik.PemilikHomePage
 import com.example.sewastudio.view.pemilik.PemilikHomeUI
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -46,12 +45,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.sewastudio.BottomNavigation
+import coil.compose.rememberAsyncImagePainter
 import com.example.sewastudio.BottomNavigationPemilik
 import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.R
-import com.example.sewastudio.controller.AuthController
 import com.example.sewastudio.controller.StudioController
 import com.example.sewastudio.model.Studio
 
@@ -65,7 +63,8 @@ fun PemilikHomeUI(
     val preferencesManager = remember { PreferencesManager(context = context) }
     var studios by remember { mutableStateOf<List<Studio>?>(null) }
     val jwt = preferencesManager.getData("jwt")
-    StudioController.getStudios(jwt) { response ->
+    val userID = preferencesManager.getData("userID")
+    StudioController.getStudios(jwt, userID) { response ->
         studios = response?.data
     }
 
@@ -144,7 +143,7 @@ fun PemilikHomeUI(
                                     modifier = Modifier.padding(start = 18.dp, end = 18.dp)
                                 )
                                 Image(
-                                    painter = painterResource(id = R.drawable.ruangstudiosatu),
+                                    painter = rememberAsyncImagePainter(model = "http://10.0.2.2:1337" + studio.attributes.studioImg.data.attributes.url),
                                     contentDescription = "image description",
                                     contentScale = ContentScale.FillBounds,
                                     modifier = Modifier

@@ -1,9 +1,10 @@
 package com.example.sewastudio.controller
 
-import com.example.sewastudio.service.UserService
+import com.example.sewastudio.service.UploadService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -31,6 +32,19 @@ class ClientController {
                 .build()
 
             return retrofit.create(serviceClass)
+        }
+
+        fun <T> getUploadService(authToken: String): T {
+            val httpClient = OkHttpClient.Builder()
+                .addInterceptor(AuthInterceptor(authToken))
+                .build()
+
+            val retrofit2 = Retrofit.Builder().baseUrl("http://10.0.2.2:1337/api/")
+                .addConverterFactory(GsonConverterFactory.create()).client(
+                    OkHttpClient.Builder().addInterceptor(AuthInterceptor(authToken)).addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
+                )
+                .build()
+            return retrofit2.create(UploadService::class.java) as T
         }
     }
 }

@@ -3,29 +3,21 @@ package com.example.sewastudio.view.pelanggan
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -64,8 +56,12 @@ fun HomeUI(
     val preferencesManager = remember { PreferencesManager(context = context) }
     var studios by remember { mutableStateOf<List<Studio>?>(null) }
     val jwt = preferencesManager.getData("jwt")
-    StudioController.getStudios(jwt) { response ->
-        studios = response?.data
+    StudioController.getStudios(
+        jwt = jwt,
+        userID = null
+    ) {
+        response ->
+        studios = response!!.data
     }
 
     Scaffold(
@@ -114,6 +110,7 @@ fun HomeUI(
                 LazyColumn {
 
                     studios?.forEach { studio ->
+                        println(studio)
                         item {
                             Spacer(modifier = Modifier.padding(vertical = 10.dp))
                             Column(
@@ -200,17 +197,17 @@ fun HomeUI(
                                             top = 4.dp,
                                             bottom = 18.dp
                                         ),
+
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color(0xFF1F41BB)
-                                    ), onClick = { /*TODO*/ }) {
+                                        containerColor = if (studio.attributes.available == true) Color(0xFF1F41BB) else Color(0xFFC4C4C4),
+                                    ), onClick = { /*TODO*/ }, enabled = studio.attributes.available == true) {
                                     Text(
-                                        text = if (studio.attributes.available as Boolean) "Book Now" else "Booked",
+                                        text = if (studio.attributes.available == true) "Book Now" else "Closed",
                                         style = TextStyle(
                                             fontSize = 16.sp,
                                             lineHeight = 20.sp,
                                             fontWeight = FontWeight(400),
                                             color = Color(0xFFFFFFFF),
-                                            background = Color(0xFF1F41BB)
                                         ),
                                     )
                                 }

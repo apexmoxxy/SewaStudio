@@ -2,7 +2,6 @@ package com.example.sewastudio.service
 
 import com.example.sewastudio.model.ApiResponse
 import com.example.sewastudio.model.Studio
-import com.example.sewastudio.model.StudioResponse
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.Body
@@ -35,14 +34,21 @@ data class UpdateStudioBody(
 
 interface StudioService {
     @POST("studios")
-    fun insert(@Body body: StudioData): Call<Studio>
+    fun insert(@Body body: StudioData): Call<ApiResponse<Studio>>
     @GET("studios")
-    fun getall(@Query("filters[ownerID]") ownerID: String?, @Query("populate") populate: String?) : Call<ApiResponse<List<Studio>>>
+    fun getstudios(
+        @Query("populate") populate: String?
+    ): Call<ApiResponse<List<Studio>>>
     @GET("studios")
-    fun getstudios() : Call<ApiResponse<List<Studio>>>
+    fun getall(
+        @Query("filters[ownerID]") ownerID: String?,
+        @Query("populate") populate: String?
+    ): Call<ApiResponse<List<Studio>>>
+
     @PUT("studios/{id}")
-    fun edit(@Path("id") id: Int, @Body body: UpdateStudioData) : Call<ApiResponse<Studio>>
+    fun edit(@Path("id") id: Int, @Body body: UpdateStudioData): Call<ApiResponse<Studio>>
+
     @DELETE("studios/{id}")
-    fun delete(@Path("id") id: Int) : Call<ApiResponse<Studio>>
+    fun delete(@Path("id") id: Int): Call<ApiResponse<Studio>>
 }
 

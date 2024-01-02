@@ -15,3 +15,4 @@ class OrderAttributes {
     @SerializedName("studioScheduleID")
     var studioScheduleID : ApiResponse<List<StudioSchedule>> = ApiResponse<List<StudioSchedule>>()
 }
+
