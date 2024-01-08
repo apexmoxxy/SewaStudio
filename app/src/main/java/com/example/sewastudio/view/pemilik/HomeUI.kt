@@ -142,8 +142,14 @@ fun PemilikHomeUI(
                                     ),
                                     modifier = Modifier.padding(start = 18.dp, end = 18.dp)
                                 )
+                                var imgUrl = ""
+                                if (studio.attributes.studioImg.data != null) {
+                                    imgUrl = "https://strapi.romiteam.my.id" + studio.attributes.studioImg.data!!.attributes.url
+                                }else{
+                                    imgUrl = "https://strapi.romiteam.my.id/uploads/1000000036_9de238b701.jpg"
+                                }
                                 Image(
-                                    painter = rememberAsyncImagePainter(model = "http://10.0.2.2:1337" + studio.attributes.studioImg.data.attributes.url),
+                                    painter = rememberAsyncImagePainter(model = imgUrl),
                                     contentDescription = "image description",
                                     contentScale = ContentScale.FillBounds,
                                     modifier = Modifier

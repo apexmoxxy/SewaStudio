@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -52,12 +53,15 @@ android {
 
 dependencies {
     implementation("androidx.compose.material3:material3-android:1.2.0-alpha12")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.6") // Or the latest version
     val navVersion = "2.6.0"
-
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("com.midtrans:uikit:2.0.0-SANDBOX")
     implementation("androidx.navigation:navigation-compose:$navVersion")
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
-//    implementation ("com.himanshoe:kalendar:1.3.2")
     implementation("com.squareup.retrofit2:retrofit:2.4.0")
     implementation("com.squareup.retrofit2:converter-gson:2.4.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")

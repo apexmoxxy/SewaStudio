@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.sewastudio.BottomNavigation
+import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.R
 import com.example.sewastudio.controller.StudioController
@@ -200,7 +201,9 @@ fun HomeUI(
 
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = if (studio.attributes.available == true) Color(0xFF1F41BB) else Color(0xFFC4C4C4),
-                                    ), onClick = { /*TODO*/ }, enabled = studio.attributes.available == true) {
+                                    ), onClick = {
+                                                 GoTo("detailstudiopage", navController, preferencesManager)
+                                    }, enabled = studio.attributes.available == true) {
                                     Text(
                                         text = if (studio.attributes.available == true) "Book Now" else "Closed",
                                         style = TextStyle(
