@@ -35,6 +35,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.sewastudio.MidtransActivity
 import com.example.sewastudio.PreferencesManager
+import com.example.sewastudio.controller.MidtransController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -303,11 +304,17 @@ fun BookingPage(
                     .padding(36.dp)
                     .size(48.dp),
                 onClick = {
-                    Intent(context, MidtransActivity::class.java).also {
-                        ContextCompat.startActivity(context, it, null)
-                    }
-                    //GoTo("midtranspage", navController, preferencesManager)
-//                          GoTo("pembayaran", navController, preferencesManager)
+                    val jwt = preferencesManager.getData("jwt")
+                    val userID = preferencesManager.getData("userID")
+                    val username = preferencesManager.getData("username")
+                    MidtransController.getSnapToken(jwt, userID, username, callback = { snapToken ->
+                        if (snapToken!!.data != null || snapToken.data!! != "") {
+                            Intent(context, MidtransActivity::class.java).also {
+                                it.putExtra("snapToken", snapToken.data)
+                                ContextCompat.startActivity(context, it, null)
+                            }
+                        }
+                    })
                 }, colors = ButtonDefaults.buttonColors(primaryColor)
             ) {
                 Text(text = "Selanjutnya", color = Color.White)

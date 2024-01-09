@@ -24,7 +24,7 @@ data class UpdateStudioData(
 
 data class StudioBody(
     val name: String,
-    @SerializedName("ownerID")
+    @SerializedName("users_permissions_user")
     val ownerId: Int
 )
 
@@ -41,7 +41,7 @@ interface StudioService {
     ): Call<ApiResponse<List<Studio>>>
     @GET("studios")
     fun getall(
-        @Query("filters[ownerID]") ownerID: String?,
+        @Query("filters[users_permissions_user]") users_permissions_user: String?,
         @Query("populate") populate: String?
     ): Call<ApiResponse<List<Studio>>>
 

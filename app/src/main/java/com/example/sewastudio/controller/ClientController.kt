@@ -8,11 +8,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+var baseURL = "https://strapi.romiteam.my.id/api/"
 class ClientController {
     companion object {
 
         private val client : Retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:1337/api/")
+            .baseUrl(baseURL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -26,7 +27,7 @@ class ClientController {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:1337/api/") // Replace with your base URL
+                .baseUrl(baseURL) // Replace with your base URL
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient)
                 .build()
@@ -39,7 +40,7 @@ class ClientController {
                 .addInterceptor(AuthInterceptor(authToken))
                 .build()
 
-            val retrofit2 = Retrofit.Builder().baseUrl("http://10.0.2.2:1337/api/")
+            val retrofit2 = Retrofit.Builder().baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create()).client(
                     OkHttpClient.Builder().addInterceptor(AuthInterceptor(authToken)).addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
                 )

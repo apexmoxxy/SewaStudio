@@ -33,14 +33,13 @@ class StudioController {
                 ): Unit =
                     if (response.isSuccessful) {
 //                        println(response.body())
-                        callback(response.body())
                         //UploadController.uploadFile(jwt, file, callback)
                         UploadController.uploadFile(
                             jwt,
                             response.body()!!.data!!.id,
                             selectedImageFile
                         ) {
-                            println(it)
+                            callback(response.body())
                         }
                     } else {
 //                        println("Empty")

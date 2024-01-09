@@ -1,16 +1,13 @@
 package com.example.sewastudio.controller
 
-import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.model.Auth
-import com.example.sewastudio.model.User
 import com.example.sewastudio.service.AuthService
 import com.example.sewastudio.service.LoginData
 import com.example.sewastudio.service.RegisterData
 import com.example.sewastudio.service.UserRole
-import com.example.sewastudio.service.UserService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +25,8 @@ class AuthController {
                     GoTo("karyawanhomepage", navController, preferencesManager)
                 }
                 else -> {
-                    GoTo("pelangganhomepage", navController, preferencesManager)
+//                    GoTo("pelangganhomepage", navController, preferencesManager)
+                    GoTo("bookingpage", navController, preferencesManager)
                 }
             }
         }

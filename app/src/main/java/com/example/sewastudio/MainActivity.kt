@@ -34,6 +34,8 @@ import com.example.sewastudio.view.AuthUI
 import com.example.sewastudio.view.SplashPage
 import com.example.sewastudio.view.karyawan.KaryawanHomePage
 import com.example.sewastudio.view.pelanggan.BookingPage
+import com.example.sewastudio.view.pelanggan.DetailStudioPage
+import com.example.sewastudio.view.pelanggan.HalamanPembayaran
 import com.example.sewastudio.view.pelanggan.HomeUI
 import com.example.sewastudio.view.pelanggan.Setting
 import com.example.sewastudio.view.pelanggan.Setting2
@@ -45,6 +47,7 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             val preferencesManager = PreferencesManager(context = LocalContext.current)
             val sharedPreferences: SharedPreferences = LocalContext.current.getSharedPreferences("auth", Context.MODE_PRIVATE)
@@ -113,6 +116,12 @@ class MainActivity : ComponentActivity() {
                 composable(route = "setting2") {
                     Setting2(navController)
                 }
+                composable(route = "detailstudiopage") {
+                    DetailStudioPage(navController)
+                }
+                composable(route = "pembayaran") {
+                    HalamanPembayaran(navController)
+                }
             }
         }
     }
@@ -146,7 +155,6 @@ fun BottomNavigation(navController: NavController) {
         }
     }
 }
-
 @Composable
 fun BottomNavigationPemilik(navController: NavController) {
     NavigationBar {

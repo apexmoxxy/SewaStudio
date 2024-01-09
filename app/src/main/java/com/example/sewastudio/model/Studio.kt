@@ -23,11 +23,13 @@ class StudioAttributes{
     var available: Any? = null
     @SerializedName("studioImg")
     var studioImg: StudioImgData = StudioImgData()
+    @SerializedName("users_permissions_user")
+    var user: User = User()
 }
 
 class StudioImgData{
     @SerializedName("data")
-    var data: StudioImg = StudioImg()
+    var data: StudioImg? = StudioImg()
 }
 class StudioImg{
     @SerializedName("id")
