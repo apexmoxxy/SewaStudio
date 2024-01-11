@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.sewastudio.BottomNavigationPemilik
-import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.R
 import com.example.sewastudio.controller.StudioController
@@ -64,7 +63,10 @@ fun PemilikHomeUI(
     var studios by remember { mutableStateOf<List<Studio>?>(null) }
     val jwt = preferencesManager.getData("jwt")
     val userID = preferencesManager.getData("userID")
-    StudioController.getStudios(jwt, userID) { response ->
+    StudioController.getStudios(
+        jwt = jwt,
+        filters = null,
+        userID = userID) { response ->
         studios = response?.data
     }
 
@@ -86,7 +88,7 @@ fun PemilikHomeUI(
                 ),
             )
         },floatingActionButton = {
-            FloatingActionButton(onClick = {GoTo("createstudiopage", navController, preferencesManager)
+            FloatingActionButton(onClick = {navController.navigate("createstudiopage")
             }) {
                 Icon(Icons.Default.Add, contentDescription = "Add Studio")
             }
@@ -142,11 +144,10 @@ fun PemilikHomeUI(
                                     ),
                                     modifier = Modifier.padding(start = 18.dp, end = 18.dp)
                                 )
-                                var imgUrl = ""
-                                if (studio.attributes.studioImg.data != null) {
-                                    imgUrl = "https://strapi.romiteam.my.id" + studio.attributes.studioImg.data!!.attributes.url
+                                var imgUrl = if (studio.attributes.studioImg.data != null) {
+                                    "https://strapi.romiteam.my.id" + studio.attributes.studioImg.data!!.attributes.url
                                 }else{
-                                    imgUrl = "https://strapi.romiteam.my.id/uploads/1000000036_9de238b701.jpg"
+                                    R.drawable.ruangstudiosatu
                                 }
                                 Image(
                                     painter = rememberAsyncImagePainter(model = imgUrl),
@@ -217,7 +218,8 @@ fun PemilikHomeUI(
                                             containerColor = Color(0xFFB80808)
                                         ), onClick = { StudioController.deleteStudio(jwt, studio.id)
                                             var currentPage = preferencesManager.getData("currentPage")
-                                            GoTo(currentPage, navController, preferencesManager) }) {
+                                            navController.navigate(currentPage)
+                                        }) {
                                         Text(
                                             text = "Hapus",
                                             style = TextStyle(
@@ -246,7 +248,7 @@ fun PemilikHomeUI(
                                             containerColor = Color(0xFF1F41BB)
                                         ), onClick = { StudioController.deleteStudio(jwt, studio.id)
                                             var currentPage = preferencesManager.getData("currentPage")
-                                            GoTo(currentPage, navController, preferencesManager) }) {
+                                            navController.navigate(currentPage) }) {
                                         Text(
                                             text = "Edit",
                                             style = TextStyle(

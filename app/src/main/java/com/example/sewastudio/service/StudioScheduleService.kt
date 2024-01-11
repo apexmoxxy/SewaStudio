@@ -24,7 +24,7 @@ data class UpdateStudioScheduleData(
 
 data class StudioScheduleBody(
     val name: String,
-    @SerializedName("ownerID")
+    @SerializedName("userid")
     val ownerId: Int
 )
 
@@ -36,7 +36,7 @@ interface StudioScheduleService {
     @POST("studio-schedules")
     fun insert(@Body body: StudioScheduleData): Call<ApiResponse<StudioSchedule>>
     @GET("studio-schedules")
-    fun getall(@Query("filters[ownerID]") ownerID: String?, @Query("populate") populate: String?) : Call<ApiResponse<List<StudioSchedule>>>
+    fun getall(@Query("filters[users_permissions_user]") user: String?, @Query("populate") populate: String?) : Call<ApiResponse<List<StudioSchedule>>>
     @GET("studio-schedules")
     fun getall(@Query("populate") populate: String?) : Call<ApiResponse<List<StudioSchedule>>>
 

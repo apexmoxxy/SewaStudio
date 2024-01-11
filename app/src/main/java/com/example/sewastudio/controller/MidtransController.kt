@@ -1,13 +1,13 @@
 package com.example.sewastudio.controller
 
 import com.example.sewastudio.model.Order
+import com.example.sewastudio.service.ItemData
 import com.example.sewastudio.service.OrderBody
 import com.example.sewastudio.service.OrderData
 import com.example.sewastudio.service.OrderService
 import com.example.sewastudio.service.SnapData
 import com.example.sewastudio.service.SnapService
 import com.example.sewastudio.service.SnapToken
-import com.example.sewastudio.service.StudioScheduleData
 import com.example.sewastudio.service.TransactionData
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,17 +15,13 @@ import retrofit2.Response
 
 class MidtransController {
     companion object {
-        fun getSnapToken(jwt: String, userID: String, username: String, callback: (SnapToken?) -> Unit) {
+        fun getSnapToken(jwt: String, userID: String, username: String, items: List<ItemData>, callback: (SnapToken?) -> Unit) {
             var snapService : SnapService = ClientController.getAuthService(SnapService::class.java, jwt)
             val transactionData : TransactionData = TransactionData(
-                item_details = listOf(
-                    StudioScheduleData(),
-                    StudioScheduleData(),
-                    StudioScheduleData()
-                ),
+                item_details = items,
                 customer_details = com.midtrans.sdk.uikit.api.model.CustomerDetails(
-                    userID,
-                    username
+                    firstName = username,
+                    phone = "08123456789",
                 )
             )
             snapService.getSnapToken(SnapData(transactionData)).enqueue(object : Callback<SnapToken> {

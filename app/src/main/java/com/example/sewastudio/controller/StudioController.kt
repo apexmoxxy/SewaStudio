@@ -55,13 +55,13 @@ class StudioController {
         fun getStudios(
             jwt: String,
             userID: String?,
+            filters : Map<String, String>?,
             callback: (ApiResponse<List<Studio>>?) -> Unit
         ) {
-            println(jwt)
             var studioService: StudioService =
                 ClientController.getAuthService(StudioService::class.java, jwt)
             var operation =
-                if (userID != null) studioService.getall(userID, "*") else studioService.getstudios(
+                if (userID != null) studioService.getall(userID, filters,"*") else studioService.getstudios(filters,
                     "*"
                 )
             operation.enqueue(

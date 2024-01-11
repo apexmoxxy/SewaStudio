@@ -84,21 +84,31 @@ class MainActivity : ComponentActivity() {
                     SplashPage(navController)
                 }
                 composable(route = "auth-page") {
-//                    AuthPage(navController)
                     AuthUI(navController)
                 }
                 composable(route = "pelangganhomepage") {
-//                    PelangganHomePage(navController)
                     HomeUI(navController)
                 }
-                composable(route = "bookingpage") {
-                    BookingPage(navController)
+                composable(route = "bookingpage/{studio_id}/{name}/{price}/{date}") {
+                    val studio_id = it.arguments?.getString("studio_id")!!
+                    val name = it.arguments?.getString("name")!!
+                    val price = it.arguments?.getString("price")!!
+                    val date = it.arguments?.getString("date")!!
+                    val time = date.split("::")
+                    if (studio_id != null && name != null && price != null && date != null){
+                        if (price.toInt() != 0) {
+                            BookingPage(navController, studio_id, name, price.toInt(), time[0], time[1])
+                        }
+                    }
+//                    BookingPage(navController, it.arguments?.getString("studio_id")!!)
+                }
+                composable(route = "pelangganorderlist") {
+
                 }
                 composable(route = "karyawanhomepage") {
                     KaryawanHomePage(navController)
                 }
                 composable(route = "pemilikhomepage") {
-//                    PemilikHomePage(navController)
                     PemilikHomeUI(navController)
                 }
                 composable(route = "createstudiopage") {
@@ -116,8 +126,15 @@ class MainActivity : ComponentActivity() {
                 composable(route = "setting2") {
                     Setting2(navController)
                 }
-                composable(route = "detailstudiopage") {
-                    DetailStudioPage(navController)
+                composable(route = "detailstudiopage/{studio_id}/{name}/{price}") {
+                    val studio_id = it.arguments?.getString("studio_id")!!
+                    val name = it.arguments?.getString("name")!!
+                    val price = it.arguments?.getString("price")!!
+                    if (studio_id != null && name != null && price != null){
+                        if (price.toInt() != 0) {
+                            DetailStudioPage(navController, studio_id, name, price.toInt())
+                        }
+                    }
                 }
                 composable(route = "pembayaran") {
                     HalamanPembayaran(navController)

@@ -11,6 +11,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 data class StudioData(
     @SerializedName("data")
@@ -37,12 +38,14 @@ interface StudioService {
     fun insert(@Body body: StudioData): Call<ApiResponse<Studio>>
     @GET("studios")
     fun getstudios(
-        @Query("populate") populate: String?
+        @QueryMap filters: Map<String, String>?,
+        @Query("populate") populate: String?,
     ): Call<ApiResponse<List<Studio>>>
     @GET("studios")
     fun getall(
         @Query("filters[users_permissions_user]") users_permissions_user: String?,
-        @Query("populate") populate: String?
+        @QueryMap filters : Map<String, String>?,
+        @Query("populate") populate: String?,
     ): Call<ApiResponse<List<Studio>>>
 
     @PUT("studios/{id}")

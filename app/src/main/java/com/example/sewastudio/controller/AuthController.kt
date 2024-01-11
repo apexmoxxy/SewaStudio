@@ -1,7 +1,6 @@
 package com.example.sewastudio.controller
 
 import androidx.navigation.NavController
-import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.model.Auth
 import com.example.sewastudio.service.AuthService
@@ -19,14 +18,13 @@ class AuthController {
         fun routeLogin(role: UserRole, navController: NavController, preferencesManager: PreferencesManager){
             when (role) {
                 UserRole.Pemilik -> {
-                    GoTo("pemilikhomepage", navController, preferencesManager)
+                    navController.navigate("pemilikhomepage")
                 }
                 UserRole.Karyawan -> {
-                    GoTo("karyawanhomepage", navController, preferencesManager)
+                    navController.navigate("karyawanhomepage")
                 }
                 else -> {
-//                    GoTo("pelangganhomepage", navController, preferencesManager)
-                    GoTo("bookingpage", navController, preferencesManager)
+                    navController.navigate("pelangganhomepage")
                 }
             }
         }
@@ -43,8 +41,6 @@ class AuthController {
                         prefMan.saveData("userID", userID)
                         prefMan.saveData("username", username)
                         prefMan.saveData("password", password)
-                        println(role)
-                        println("Succesful login")
                         routeLogin(role,navController,prefMan)
                     } else {
                         println("Unsuccesful login")
@@ -71,8 +67,6 @@ class AuthController {
                         prefMan.saveData("userID", userID)
                         prefMan.saveData("username", username)
                         prefMan.saveData("password", password)
-                        println(role)
-                        println("Succesful register")
                         routeLogin(role,navController,prefMan)
                     } else {
                         println("Unsuccesful register")
@@ -96,13 +90,7 @@ class AuthController {
                         val respUser = respBody.user!!
                         val userID = respUser.id.toString()
                         val role = respUser.status
-                        prefMan.saveData("jwt", jwt)
-                        prefMan.saveData("userID", userID)
-                        prefMan.saveData("username", username)
-                        prefMan.saveData("password", password)
-                        println(role)
-                        println("Succesful register")
-                        GoTo("pemilikhomepage", navController, prefMan)
+                        navController.navigate("pemilikhomepage")
                     } else {
                         println("Unsuccesful register")
                         navController.navigate("auth-page")

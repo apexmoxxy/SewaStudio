@@ -1,7 +1,6 @@
 package com.example.sewastudio.view.pemilik
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
@@ -34,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,31 +41,25 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.controller.AuthController
-import com.example.sewastudio.controller.StudioController
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateKaryawanPage(navController: NavController, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
-    val sharedPreferences: SharedPreferences = LocalContext.current.getSharedPreferences("auth", Context.MODE_PRIVATE)
     val preferencesManager = remember { PreferencesManager(context = context) }
     var username by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember {mutableStateOf(TextFieldValue(""))}
     var passwordVisibility by remember { mutableStateOf(false) }
-    var userID = sharedPreferences.getString("userID","")
-    val jwt = preferencesManager.getData("jwt")
-    val prevPage = preferencesManager.getData("previousPage")
 
     Scaffold (
         topBar = {
             TopAppBar(
                 title = {Button(
                     onClick = {
-                        GoTo(prevPage, navController, preferencesManager)
+                        navController.navigate("pemilikhomepage")
                     },
                     modifier = Modifier
                         .fillMaxWidth()

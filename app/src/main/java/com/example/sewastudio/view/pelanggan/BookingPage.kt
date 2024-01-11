@@ -3,7 +3,6 @@ package com.example.sewastudio.view.pelanggan
 //import com.example.sewastudio.MyWebView
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,18 +35,36 @@ import androidx.navigation.NavController
 import com.example.sewastudio.MidtransActivity
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.controller.MidtransController
+import com.example.sewastudio.service.ItemData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingPage(
     navController: NavController,
+    studio_id : String?,
+    name : String?,
+    price : Int?,
+    date : String?,
+    time : String?,
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current
 ) {
-
+    if (studio_id == null || date == null || time == null) {
+        navController.navigate("pelangganhomepage")
+    }
+    val convertedTime = time?.split("-")
+    val startTime = convertedTime?.get(0)
+    val endTime = convertedTime?.get(1)
+    val duration = if (startTime != null && endTime != null) {
+        endTime.toFloat().toInt() - startTime.toFloat().toInt()
+    } else {
+        0
+    }
+    if (duration == 0) {
+        navController.navigate("detailstudiopage/$studio_id/$name/$price")
+    }
     val preferencesManager = remember { PreferencesManager(context = context) }
     val primaryColor = Color(0xFF1F41BB)
-    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://app.sandbox.midtrans.com/snap/v3/redirection/a911ac47-6d01-417b-946e-95845e00cf53#/409")) }
 
     Scaffold(
         topBar = {
@@ -65,7 +82,7 @@ fun BookingPage(
                                 )
                                 .width(36.dp)
                                 .height(36.dp),
-                            onClick = { navController.navigateUp() }
+                            onClick = { navController.navigate("detailstudiopage/$studio_id/$name/$price") }
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
@@ -123,7 +140,7 @@ fun BookingPage(
                             )
                         )
                         Text(
-                            text = "3 hours",
+                            text = "$duration hours",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight(500),
@@ -152,8 +169,10 @@ fun BookingPage(
                                 color = Color(0xFF423C3C),
                             )
                         )
+//                        var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+//                        var convertedDate = LocalDate.parse(date, formatter)
                         Text(
-                            text = "11 Januari 2024",
+                            text = "$date",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight(500),
@@ -183,7 +202,7 @@ fun BookingPage(
                             )
                         )
                         Text(
-                            text = "09.00 a.m - 12.00 p.m",
+                            text = "$startTime - $endTime p.m",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight(500),
@@ -212,14 +231,16 @@ fun BookingPage(
                                 color = Color(0xFF423C3C),
                             )
                         )
-                        Text(
-                            text = "Rp. 388.000",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight(500),
-                                color = Color(0xFF000000),
+                        if (price != null) {
+                            Text(
+                                text = "Rp. ${price*duration}",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF000000),
+                                )
                             )
-                        )
+                        }
                     }
                     Divider(modifier = Modifier
                         .padding(0.dp)
@@ -273,14 +294,16 @@ fun BookingPage(
                                 color = Color(0xFF000000),
                             )
                         )
-                        Text(
-                            text = "Rp. 388.000",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight(700),
-                                color = Color(0xFF000000),
+                        if (price != null) {
+                            Text(
+                                text = "Rp. ${price*duration}",
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight(700),
+                                    color = Color(0xFF000000),
+                                )
                             )
-                        )
+                        }
                     }
                     Divider(modifier = Modifier
                         .padding(0.dp)
@@ -307,7 +330,7 @@ fun BookingPage(
                     val jwt = preferencesManager.getData("jwt")
                     val userID = preferencesManager.getData("userID")
                     val username = preferencesManager.getData("username")
-                    MidtransController.getSnapToken(jwt, userID, username, callback = { snapToken ->
+                    MidtransController.getSnapToken(jwt, userID, username, listOf(ItemData(id = studio_id!!, duration = duration, date = date!!)), callback = { snapToken ->
                         if (snapToken!!.data != null || snapToken.data!! != "") {
                             Intent(context, MidtransActivity::class.java).also {
                                 it.putExtra("snapToken", snapToken.data)
@@ -321,106 +344,4 @@ fun BookingPage(
             }
         }
     }
-//        Column(
-//            modifier = Modifier
-//                .padding(innerPadding)
-//                .fillMaxSize()
-//        ) {
-//            Box(
-//                modifier = Modifier
-//                    .shadow(
-//                        elevation = 4.dp,
-//                        spotColor = Color(0x40000000),
-//                        ambientColor = Color(0x40000000)
-//                    )
-//                    .width(330.dp)
-//                    .height(228.dp)
-//                    .background(color = Color(0xFFFFFFFF))
-//            ) {
-//                Text(
-//                    text = "Booking Details\n4 Hour\n4 Desember 2023\n09.00 a.m - 13.00 p.m\n\nDetail Pembayaran\n\nSubtotal 388K\nTax -\n---------------------\nTotal 388K",
-//                    style = TextStyle(
-//                        fontSize = 12.sp,
-//                        fontWeight = FontWeight(400),
-//                        color = Color(0xFF000000),
-//                    )
-//                )
-//            }
-//
-//            Box(
-//                modifier = Modifier
-//                    .shadow(
-//                        elevation = 4.dp,
-//                        spotColor = Color(0x40000000),
-//                        ambientColor = Color(0x40000000)
-//                    )
-//                    .width(328.dp)
-//                    .height(273.dp)
-//                    .background(color = Color(0xFFFFFFFF))
-//            ) {
-//                Column(
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                ) {
-//                    Text(
-//                        text = "Your Text Above Columns",
-//                        style = TextStyle(
-//                            fontSize = 16.sp,
-//                            fontWeight = FontWeight(600),
-//                            color = Color(0xFF000000),
-//                        ),
-//                        modifier = Modifier.padding(bottom = 8.dp)
-//                    )
-//
-//                    Row(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(8.dp),
-//                        horizontalArrangement = Arrangement.SpaceBetween
-//                    ) {
-//                        Column(
-//                            modifier = Modifier.weight(1f)
-//                        ) {
-//                            Text(
-//                                text = "Nama",
-//                                style = TextStyle(
-//                                    fontSize = 14.sp,
-//                                    fontWeight = FontWeight(500),
-//                                    color = Color(0xFF000000),
-//                                ),
-//                                modifier = Modifier.padding(bottom = 4.dp)
-//                            )
-//                        }
-//
-//                        Column(
-//                            modifier = Modifier.weight(1f)
-//                        ) {
-//                            Text(
-//                                text = "Email",
-//                                style = TextStyle(
-//                                    fontSize = 14.sp,
-//                                    fontWeight = FontWeight(500),
-//                                    color = Color(0xFF000000),
-//                                ),
-//                                modifier = Modifier.padding(bottom = 4.dp)
-//                            )
-//                        }
-//
-//                        Column(
-//                            modifier = Modifier.weight(1f)
-//                        ) {
-//                            Text(
-//                                text = "No. WhatsApp",
-//                                style = TextStyle(
-//                                    fontSize = 14.sp,
-//                                    fontWeight = FontWeight(500),
-//                                    color = Color(0xFF000000),
-//                                ),
-//                                modifier = Modifier.padding(bottom = 4.dp)
-//                            )
-//                        }
-//                    }
-//                }
-//            }
-//        }
 }

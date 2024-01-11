@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 data class TransactionData(
     @SerializedName("item_details")
-    val item_details: List<StudioScheduleData>,
+    val item_details: List<ItemData>,
     @SerializedName("customer_details")
     val customer_details: CustomerDetails,
 )
@@ -18,6 +18,14 @@ data class SnapData(
     val data: TransactionData,
 )
 
+data class ItemData(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("duration")
+    val duration: Int,
+    @SerializedName("date")
+    val date: String
+)
 interface SnapService {
     @POST("midtrans/")
     fun getSnapToken(@Body body: SnapData) : Call<SnapToken>

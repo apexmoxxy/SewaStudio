@@ -62,23 +62,46 @@ class MidtransActivity : AppCompatActivity() {
                             ContextCompat.startActivity(this, it, null)
                         }
                     }
+
                     UiKitConstants.STATUS_PENDING -> {
+                        Intent(this, MainActivity::class.java).also {
+                            ContextCompat.startActivity(this, it, null)
+                        }
                         Toast.makeText(this, "Transaction Pending. ID: " + transactionResult.transactionId, Toast.LENGTH_LONG).show()
                     }
+
                     UiKitConstants.STATUS_FAILED -> {
+                        Intent(this, MainActivity::class.java).also {
+                            ContextCompat.startActivity(this, it, null)
+                        }
                         Toast.makeText(this, "Transaction Failed. ID: " + transactionResult.transactionId, Toast.LENGTH_LONG).show()
                     }
+
                     UiKitConstants.STATUS_CANCELED -> {
+                        Intent(this, MainActivity::class.java).also {
+                            ContextCompat.startActivity(this, it, null)
+                        }
                         Toast.makeText(this, "Transaction Cancelled", Toast.LENGTH_LONG).show()
                     }
+
                     UiKitConstants.STATUS_INVALID -> {
+                        Intent(this, MainActivity::class.java).also {
+                            ContextCompat.startActivity(this, it, null)
+                        }
                         Toast.makeText(this, "Transaction Invalid. ID: " + transactionResult.transactionId, Toast.LENGTH_LONG).show()
                     }
+
                     else -> {
+                        Intent(this, MainActivity::class.java).also {
+                            ContextCompat.startActivity(this, it, null)
+                        }
                         Toast.makeText(this, "Transaction ID: " + transactionResult.transactionId + ". Message: " + transactionResult.status, Toast.LENGTH_LONG).show()
                     }
                 }
             } else {
+                Intent(this, MainActivity::class.java).also {
+                    ContextCompat.startActivity(this, it, null)
+                }
                 Toast.makeText(this, "Transaction Invalid", Toast.LENGTH_LONG).show()
             }
             println(transactionResult!!.status)

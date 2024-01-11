@@ -55,7 +55,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
-import com.example.sewastudio.GoTo
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.controller.StudioController
 import java.io.File
@@ -72,7 +71,6 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
     var studioname by remember { mutableStateOf(TextFieldValue("")) }
     var userID = sharedPreferences.getString("userID","")
     val jwt = preferencesManager.getData("jwt")
-    val prevPage = preferencesManager.getData("previousPage")
 
     var selectedImageFile by remember { mutableStateOf<File?>(null) }
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
@@ -110,7 +108,7 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
             TopAppBar(
                 title = {Button(
                     onClick = {
-                        GoTo(prevPage, navController, preferencesManager)
+                        navController.navigate("pemilikhomepage")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -217,7 +215,7 @@ fun CreateStudioPage(navController: NavController, modifier: Modifier = Modifier
                             StudioController.insertStudio(jwt, studioname.text,
                                 selectedImageFile!!, userID!!.toInt()){
                                 studio ->  if (studio != null) {
-                                    GoTo("pemilikhomepage", navController, preferencesManager)
+                                    navController.navigate("pemilikhomepage")
                                 }
                             }
                         },

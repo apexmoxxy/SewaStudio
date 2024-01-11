@@ -1,6 +1,8 @@
 package com.example.sewastudio.model
 
 import com.google.gson.annotations.SerializedName
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 
 class Studio {
@@ -13,18 +15,14 @@ class Studio {
 class StudioAttributes{
     @SerializedName("name")
     var name: String = ""
-    @SerializedName("createdAt")
-    var createdAt: String = ""
-    @SerializedName("updatedAt")
-    var updatedAt: String = ""
-    @SerializedName("publishedAt")
-    var publishedAt: String = ""
     @SerializedName("available")
     var available: Any? = null
     @SerializedName("studioImg")
     var studioImg: StudioImgData = StudioImgData()
     @SerializedName("users_permissions_user")
     var user: User = User()
+    @SerializedName("price")
+    var price: Int = 25000
 }
 
 class StudioImgData{
@@ -52,14 +50,8 @@ class StudioSchedule {
 }
 
 class StudioScheduleAttributes {
-//    @SerializedName("studioID")
-//    var studioID : ApiResponse<Studio> = ApiResponse<Studio>()
-//    @SerializedName("date")
-//    var date : String = ""
-//    @SerializedName("time")
-//    var time : String = ""
-//    @SerializedName("price")
-//    var price : Int = 0
-//    @SerializedName("status")
-//    var status : String = ""
+    val price: Int? = 0
+    val bookDateTime: LocalDateTime? = null
+    val start_time: LocalTime = LocalTime.now()
+    val end_time: LocalTime = LocalTime.now().plusHours(2)
 }
