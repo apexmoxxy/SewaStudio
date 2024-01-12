@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.sewastudio.controller.StudioScheduleController
 import com.example.sewastudio.databinding.ActivityMain2Binding
 import com.midtrans.sdk.uikit.api.model.CustomColorTheme
 import com.midtrans.sdk.uikit.api.model.TransactionResult
@@ -21,7 +22,10 @@ class MidtransActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val snapToken = intent.getStringExtra("snapToken")
-        if (snapToken == null) {
+        val studioschedule = intent.getStringExtra("studioschedule")
+        println(studioschedule+"this is studio schedule")
+        val jwt = intent.getStringExtra("jwt")
+        if (jwt == null || snapToken == null) {
             Intent(this, MainActivity::class.java).also {
                 ContextCompat.startActivity(this, it, null)
             }
@@ -58,6 +62,9 @@ class MidtransActivity : AppCompatActivity() {
             if (transactionResult != null) {
                 when (transactionResult.status) {
                     UiKitConstants.STATUS_SUCCESS -> {
+                        val jwt = intent.getStringExtra("jwt")
+                        val studioschedule = intent.getStringExtra("studioschedule")
+                        StudioScheduleController.editStudioSchedule(jwt = jwt!!, studioschedule = studioschedule!!.toInt(), status = "accepted")
                         Intent(this, MainActivity::class.java).also {
                             ContextCompat.startActivity(this, it, null)
                         }

@@ -21,10 +21,14 @@ data class SnapData(
 data class ItemData(
     @SerializedName("id")
     val id: String,
-    @SerializedName("duration")
-    val duration: Int,
+    @SerializedName("startTime")
+    val startTime: String,
+    @SerializedName("endTime")
+    val endTime: String,
     @SerializedName("date")
-    val date: String
+    val date: String,
+    @SerializedName("price")
+    val price : Int
 )
 interface SnapService {
     @POST("midtrans/")
@@ -34,5 +38,6 @@ interface SnapService {
 class SnapToken{
     @SerializedName("data")
     var data: String? = ""
+
 }
 

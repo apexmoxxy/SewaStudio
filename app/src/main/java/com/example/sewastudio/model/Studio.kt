@@ -50,8 +50,14 @@ class StudioSchedule {
 }
 
 class StudioScheduleAttributes {
+    @SerializedName("studio")
+    val studio: Studio? = null
+    @SerializedName("price")
     val price: Int? = 0
-    val bookDateTime: LocalDateTime? = null
+    @SerializedName("bookdate")
+    val bookdate: LocalDateTime? = null
+    @SerializedName("start_time")
     val start_time: LocalTime = LocalTime.now()
+    @SerializedName("end_time")
     val end_time: LocalTime = LocalTime.now().plusHours(2)
 }

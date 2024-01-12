@@ -10,18 +10,25 @@ import com.example.sewastudio.service.UpdateStudioScheduleData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class StudioScheduleController {
     companion object {
-        fun insertStudioSchedule(jwt: String, studioname: String, selectedImageFile : File, ownerId: Int, callback: (ApiResponse<StudioSchedule>?) -> Unit) {
+        fun insertStudioSchedule(jwt: String, studioid: String, bookdate: String, price: Int, start_time: String, end_time: String, status: String, userid: String, callback: (ApiResponse<StudioSchedule>?) -> Unit) {
             var studioScheduleService : StudioScheduleService = ClientController.getAuthService(StudioScheduleService::class.java, jwt)
             val studioScheduleData = StudioScheduleData(
-                StudioScheduleBody(name = studioname, ownerId = ownerId)
+                StudioScheduleBody(
+                    studioid,
+                    bookdate.split("-").reversed().joinToString("-"),
+                    price,
+                    start_time,
+                    end_time,
+                    status,
+                    user_permissions_user = userid)
             )
             studioScheduleService.insert(studioScheduleData).enqueue(object : Callback<ApiResponse<StudioSchedule>> {
                 override fun onResponse(call: Call<ApiResponse<StudioSchedule>>, response: Response<ApiResponse<StudioSchedule>>): Unit =
                     if (response.isSuccessful) {
+                        response.body()?.data?.let { println(it.id) }
                         callback(response.body())
                     } else {
                         callback(null)
@@ -50,12 +57,12 @@ class StudioScheduleController {
                 }
             })
         }
-        fun editStudioSchedule(jwt: String, studioID : Int, studioname: String){
+        fun editStudioSchedule(jwt: String, studioschedule : Int, status: String){
             var studioScheduleService : StudioScheduleService = ClientController.getAuthService(StudioScheduleService::class.java, jwt)
             val studioScheduleData = UpdateStudioScheduleData(
-                UpdateStudioScheduleBody(name = studioname)
+                UpdateStudioScheduleBody(status = status)
             )
-            studioScheduleService.edit(studioID,studioScheduleData).enqueue(object : Callback<ApiResponse<StudioSchedule>>{
+            studioScheduleService.edit(studioschedule,studioScheduleData).enqueue(object : Callback<ApiResponse<StudioSchedule>>{
                 override fun onResponse(
                     call: Call<ApiResponse<StudioSchedule>>,
                     response: Response<ApiResponse<StudioSchedule>>): Unit =

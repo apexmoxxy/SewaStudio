@@ -23,13 +23,18 @@ data class UpdateStudioScheduleData(
 )
 
 data class StudioScheduleBody(
-    val name: String,
-    @SerializedName("userid")
-    val ownerId: Int
+    val studio: String,
+    val bookdate: String,
+    val price: Int,
+    val start_time: String,
+    val end_time: String,
+    val status: String,
+    @SerializedName("users_permissions_user")
+    val user_permissions_user: String
 )
 
 data class UpdateStudioScheduleBody(
-    val name: String,
+    val status: String,
 )
 
 interface StudioScheduleService {

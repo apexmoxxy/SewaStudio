@@ -65,8 +65,8 @@ fun PemilikHomeUI(
     val userID = preferencesManager.getData("userID")
     StudioController.getStudios(
         jwt = jwt,
-        filters = null,
-        userID = userID) { response ->
+        userID = userID)
+    { response ->
         studios = response?.data
     }
 

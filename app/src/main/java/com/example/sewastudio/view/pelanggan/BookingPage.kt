@@ -36,6 +36,7 @@ import com.example.sewastudio.MidtransActivity
 import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.controller.MidtransController
 import com.example.sewastudio.service.ItemData
+import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,13 +54,11 @@ fun BookingPage(
         navController.navigate("pelangganhomepage")
     }
     val convertedTime = time?.split("-")
-    val startTime = convertedTime?.get(0)
-    val endTime = convertedTime?.get(1)
-    val duration = if (startTime != null && endTime != null) {
-        endTime.toFloat().toInt() - startTime.toFloat().toInt()
-    } else {
-        0
-    }
+    val startTime = convertedTime?.get(0)!!.split(".")
+    val endTime = convertedTime?.get(1)!!.split(".")
+    val convertedStartTime = LocalTime.of(startTime[0].toInt(),startTime[1].toInt())
+    val convertedEndTime = LocalTime.of(endTime[0].toInt(),endTime[1].toInt())
+    val duration = convertedEndTime.hour - convertedStartTime.hour
     if (duration == 0) {
         navController.navigate("detailstudiopage/$studio_id/$name/$price")
     }
@@ -202,7 +201,19 @@ fun BookingPage(
                             )
                         )
                         Text(
-                            text = "$startTime - $endTime p.m",
+                            text = "${convertedStartTime} ${
+                                if (convertedStartTime.hour in 12..23) {
+                                    "PM"
+                                } else {
+                                    "AM"
+                                }
+                            } - ${convertedEndTime} ${
+                                if (convertedEndTime.hour in 12..23) {
+                                    "PM"
+                                } else {
+                                    "AM"
+                                }
+                            }",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight(500),
@@ -330,14 +341,18 @@ fun BookingPage(
                     val jwt = preferencesManager.getData("jwt")
                     val userID = preferencesManager.getData("userID")
                     val username = preferencesManager.getData("username")
-                    MidtransController.getSnapToken(jwt, userID, username, listOf(ItemData(id = studio_id!!, duration = duration, date = date!!)), callback = { snapToken ->
+
+                    MidtransController.getSnapToken(jwt, userID, username, ItemData(id = studio_id!!, startTime = convertedStartTime.toString()+":00.000", endTime = convertedEndTime.toString()+":00.000", date = date!!, price = price!!.toInt()),preferencesManager, callback = { snapToken ->
+                        var studioschedule = preferencesManager.getData("studioschedule")
                         if (snapToken!!.data != null || snapToken.data!! != "") {
                             Intent(context, MidtransActivity::class.java).also {
+                                it.putExtra("jwt",jwt)
+                                it.putExtra("studioschedule", studioschedule)
                                 it.putExtra("snapToken", snapToken.data)
                                 ContextCompat.startActivity(context, it, null)
                             }
-                        }
-                    })
+                        } })
+
                 }, colors = ButtonDefaults.buttonColors(primaryColor)
             ) {
                 Text(text = "Selanjutnya", color = Color.White)

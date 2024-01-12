@@ -57,6 +57,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.sewastudio.BottomNavigation
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,7 +79,14 @@ fun DetailStudioPage(
     val dateFormat = SimpleDateFormat("dd-MM-yyyy")
     val formattedTime = dateFormat.format(Calendar.getInstance().time)
     var date by remember { mutableStateOf(formattedTime.toString()) }
-    val times = listOf("10.00", "12.00", "14.00", "16.00", "18.00", "20.00")
+    val times = listOf(
+        LocalTime.of(10, 0),
+        LocalTime.of(12, 0),
+        LocalTime.of(14, 0),
+        LocalTime.of(16, 0),
+        LocalTime.of(18, 0),
+        LocalTime.of(20, 0)
+    )
     var start by remember { mutableStateOf(times[0]) }
     var end by remember { mutableStateOf(times[1]) }
     var duration by remember { mutableStateOf(0) }
@@ -188,7 +196,7 @@ fun DetailStudioPage(
                                         .semantics { text = AnnotatedString("StartTime") }
                                         .width(160.dp),
                                     readOnly = true,
-                                    value = start,
+                                    value = start.toString(),
                                     onValueChange = {},
                                     trailingIcon = {
                                         Icon(
@@ -206,11 +214,11 @@ fun DetailStudioPage(
                                 ) {
                                     times.forEach { selectionOption ->
                                         DropdownMenuItem(
-                                            text = { Text(selectionOption) },
+                                            text = { Text(selectionOption.toString()) },
                                             modifier = Modifier.semantics{contentDescription = "StartTime $selectionOption"},
                                             onClick = {
                                                 start = selectionOption
-                                                if (end.toFloat() < selectionOption.toFloat()) {
+                                                if (end.isBefore(selectionOption)) {
                                                     start = end
                                                     end = selectionOption
                                                 }
@@ -218,7 +226,6 @@ fun DetailStudioPage(
                                             },
                                         )
                                     }
-
                                 }
                             }
 
@@ -230,7 +237,7 @@ fun DetailStudioPage(
                                         .semantics { text = AnnotatedString("FinishTime") }
                                         .width(160.dp),
                                     readOnly = true,
-                                    value = end,
+                                    value = end.toString(),
                                     onValueChange = {},
                                     trailingIcon = {
                                         Icon(
@@ -246,21 +253,20 @@ fun DetailStudioPage(
                                     expanded = expanded2,
                                     onDismissRequest = { expanded2 = false }
                                 ) {
-                                    times.forEach { selectionOption2 ->
+                                    times.forEach { selectionOption ->
                                         DropdownMenuItem(
-                                            text = { Text(selectionOption2) },
-                                            modifier = Modifier.semantics{contentDescription = "EndTime $selectionOption2"},
+                                            text = { Text(selectionOption.toString()) },
+                                            modifier = Modifier.semantics{contentDescription = "EndTime $selectionOption"},
                                             onClick = {
-                                                end = selectionOption2
-                                                if (start.toFloat() > selectionOption2.toFloat()) {
+                                                end = selectionOption
+                                                if (start.isAfter(selectionOption)) {
                                                     end = start
-                                                    start = selectionOption2
+                                                    start = selectionOption
                                                 }
                                                 expanded2 = false
                                             },
                                         )
                                     }
-
                                 }
                             }
                         }
@@ -280,9 +286,9 @@ fun DetailStudioPage(
                     .padding(36.dp)
                     .size(48.dp),
                     onClick = {
-                        duration = (end.toFloat() - start.toFloat()).toInt()
+                        duration = (end.hour-start.hour).toInt()
                         if (duration > 0) {
-                            navController.navigate("bookingpage/$studio_id/$name/$price/$date::$start-$end")
+                            navController.navigate("bookingpage/$studio_id/$name/$price/$date::${start.toString().split(":").joinToString(".")}-${end.toString().split(":").joinToString(".")}")
                         } else {
                             Toast.makeText(context, "Duration can't be 0", Toast.LENGTH_SHORT).show()
                         }

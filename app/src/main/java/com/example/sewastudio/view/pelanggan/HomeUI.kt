@@ -56,6 +56,7 @@ import com.example.sewastudio.R
 import com.example.sewastudio.controller.StudioController
 import com.example.sewastudio.model.Studio
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,7 +73,14 @@ fun HomeUI(
     val dateFormat = SimpleDateFormat("dd-MM-yyyy")
     val formattedTime = dateFormat.format(Calendar.getInstance().time)
     var date by remember { mutableStateOf(formattedTime.toString()) }
-    val times = listOf("10:00", "12:00", "14:00", "16:00", "18:00", "20:00")
+    val times = listOf(
+        LocalTime.of(10, 0),
+        LocalTime.of(12, 0),
+        LocalTime.of(14, 0),
+        LocalTime.of(16, 0),
+        LocalTime.of(18, 0),
+        LocalTime.of(20, 0)
+    )
     var start by remember { mutableStateOf(times[0]) }
     var end by remember { mutableStateOf(times[1]) }
     var expanded by remember { mutableStateOf(false) }
@@ -82,12 +90,6 @@ fun HomeUI(
     var openingCallender by remember { mutableStateOf(false) }
     StudioController.getStudios(
         jwt = jwt,
-        filters = mapOf(
-            "filters[studio_schedules][bookdate][$"+"neq]" to date.split("-").reversed().joinToString("-"),
-            "filters[$"+"or][0][studio_schedules][start_time][$"+"lt]" to "$start:00.000",
-            "filters[$"+"or][1][studio_schedules][end_time][$"+"gt]" to "$end:00.000",
-            "filters[available]" to "true"
-        ),
         userID = null
     ) {
         response ->
@@ -186,11 +188,11 @@ fun HomeUI(
                         ) {
                             times.forEach { selectionOption ->
                                 DropdownMenuItem(
-                                    text = { Text(selectionOption) },
+                                    text = { Text(selectionOption.toString()) },
                                     modifier = Modifier.semantics{contentDescription = "StartTime $selectionOption"},
                                     onClick = {
                                         start = selectionOption
-                                        if (end.toFloat() < selectionOption.toFloat()) {
+                                        if (end.isBefore(selectionOption)) {
                                             start = end
                                             end = selectionOption
                                         }
@@ -224,15 +226,15 @@ fun HomeUI(
                         ) {
                             times.forEach { selectionOption ->
                                 DropdownMenuItem(
-                                    text = { Text(selectionOption) },
-                                    modifier = Modifier.semantics{contentDescription = "StartTime $selectionOption"},
+                                    text = { Text(selectionOption.toString()) },
+                                    modifier = Modifier.semantics{contentDescription = "EndTime $selectionOption"},
                                     onClick = {
                                         end = selectionOption
-                                        if (start.toFloat() > selectionOption.toFloat()) {
+                                        if (start.isAfter(selectionOption)) {
                                             end = start
                                             start = selectionOption
                                         }
-                                        expanded2 = false
+                                        expanded = false
                                     },
                                 )
                             }
