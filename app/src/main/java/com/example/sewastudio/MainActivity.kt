@@ -32,16 +32,16 @@ import com.example.sewastudio.controller.AuthController
 import com.example.sewastudio.ui.theme.SewaStudioTheme
 import com.example.sewastudio.view.AuthUI
 import com.example.sewastudio.view.SplashPage
-import com.example.sewastudio.view.karyawan.KaryawanHomePage
 import com.example.sewastudio.view.pelanggan.BookingPage
 import com.example.sewastudio.view.pelanggan.DetailStudioPage
 import com.example.sewastudio.view.pelanggan.HalamanPembayaran
 import com.example.sewastudio.view.pelanggan.HomeUI
+import com.example.sewastudio.view.pelanggan.PelangganOrderListPage
 import com.example.sewastudio.view.pelanggan.Setting
 import com.example.sewastudio.view.pelanggan.Setting2
-import com.example.sewastudio.view.pemilik.CreateKaryawanPage
 import com.example.sewastudio.view.pemilik.CreateStudioPage
 import com.example.sewastudio.view.pemilik.PemilikHomeUI
+import com.example.sewastudio.view.pemilik.PemilikOrderListPage
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -103,19 +103,16 @@ class MainActivity : ComponentActivity() {
 //                    BookingPage(navController, it.arguments?.getString("studio_id")!!)
                 }
                 composable(route = "pelangganorderlist") {
-
+                    PelangganOrderListPage(navController)
                 }
-                composable(route = "karyawanhomepage") {
-                    KaryawanHomePage(navController)
+                composable(route = "pemilikorderlist") {
+                    PemilikOrderListPage(navController)
                 }
                 composable(route = "pemilikhomepage") {
                     PemilikHomeUI(navController)
                 }
                 composable(route = "createstudiopage") {
                     CreateStudioPage(navController)
-                }
-                composable(route = "createkaryawanpage") {
-                    CreateKaryawanPage(navController)
                 }
                 composable(route = "createorderpage") {
                     CreateStudioPage(navController)
@@ -152,7 +149,7 @@ fun BottomNavigation(navController: NavController) {
                 label = "Beranda", iconResId = Icons.Default.Menu, destination = "pelangganhomepage"
             ),
             BottomNavItem(
-                label = "Orderan Kamu", iconResId = Icons.Default.DateRange, destination = "bookingpage"
+                label = "Orderan Kamu", iconResId = Icons.Default.DateRange, destination = "pelangganorderlist"
             ),
             BottomNavItem(
                 label = "Setting", iconResId = Icons.Default.Settings, destination = "setting"
@@ -180,7 +177,7 @@ fun BottomNavigationPemilik(navController: NavController) {
                 label = "Studio", iconResId = Icons.Default.Home, destination = "pemilikhomepage"
             ),
             BottomNavItem(
-                label = "Karyawan", iconResId = Icons.Default.Face, destination = "createkaryawanpage"
+                label = "Orders", iconResId = Icons.Default.Face, destination = "pemilikorderlist"
             ),
             BottomNavItem(
                 label = "Setting", iconResId = Icons.Default.Settings, destination = "setting2"

@@ -25,11 +25,14 @@ data class UpdateStudioData(
 data class StudioBody(
     val name: String,
     @SerializedName("users_permissions_user")
-    val ownerId: Int
+    val ownerId: Int,
+    @SerializedName("available")
+    val available: Boolean
 )
 
 data class UpdateStudioBody(
     val name: String,
+    val available: Boolean
 )
 
 interface StudioService {

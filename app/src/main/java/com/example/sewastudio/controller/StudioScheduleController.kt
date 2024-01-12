@@ -1,5 +1,6 @@
 package com.example.sewastudio.controller
 
+import com.example.sewastudio.PreferencesManager
 import com.example.sewastudio.model.ApiResponse
 import com.example.sewastudio.model.StudioSchedule
 import com.example.sewastudio.service.StudioScheduleBody
@@ -13,7 +14,7 @@ import retrofit2.Response
 
 class StudioScheduleController {
     companion object {
-        fun insertStudioSchedule(jwt: String, studioid: String, bookdate: String, price: Int, start_time: String, end_time: String, status: String, userid: String, callback: (ApiResponse<StudioSchedule>?) -> Unit) {
+        fun insertStudioSchedule(jwt: String, studioid: String, bookdate: String, price: Int, start_time: String, end_time: String, status: String, userid: String, prefMan: PreferencesManager, callback: (ApiResponse<StudioSchedule>?) -> Unit) {
             var studioScheduleService : StudioScheduleService = ClientController.getAuthService(StudioScheduleService::class.java, jwt)
             val studioScheduleData = StudioScheduleData(
                 StudioScheduleBody(
@@ -23,19 +24,23 @@ class StudioScheduleController {
                     start_time,
                     end_time,
                     status,
-                    user_permissions_user = userid)
+                    user_permissions_user = userid
+                )
             )
             studioScheduleService.insert(studioScheduleData).enqueue(object : Callback<ApiResponse<StudioSchedule>> {
                 override fun onResponse(call: Call<ApiResponse<StudioSchedule>>, response: Response<ApiResponse<StudioSchedule>>): Unit =
                     if (response.isSuccessful) {
-                        response.body()?.data?.let { println(it.id) }
+                        response.body()?.data?.let {
+                            prefMan.saveData("studioschedule", it.id.toString())
+                        }
                         callback(response.body())
                     } else {
+                        println("failed")
                         callback(null)
                     }
 
                 override fun onFailure(call: Call<ApiResponse<StudioSchedule>>, t: Throwable) {
-//                    println(t)
+                    println("failed")
                     callback(null)
                 }
             })

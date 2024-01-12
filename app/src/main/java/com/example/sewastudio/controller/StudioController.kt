@@ -24,7 +24,7 @@ class StudioController {
             var studioService: StudioService =
                 ClientController.getAuthService(StudioService::class.java, jwt)
             val studioData = StudioData(
-                StudioBody(name = studioname, ownerId = ownerId)
+                StudioBody(name = studioname, ownerId = ownerId, false)
             )
             studioService.insert(studioData).enqueue(object : Callback<ApiResponse<Studio>> {
                 override fun onResponse(
@@ -83,11 +83,11 @@ class StudioController {
                 },
             )
         }
-        fun editStudio(jwt: String, studioID: Int, studioname: String) {
+        fun editStudio(jwt: String, studioID: Int, studioname: String, available : Boolean) {
             var studioService: StudioService =
                 ClientController.getAuthService(StudioService::class.java, jwt)
             val studioData = UpdateStudioData(
-                UpdateStudioBody(name = studioname)
+                UpdateStudioBody(name = studioname, available)
             )
             studioService.edit(studioID, studioData)
                 .enqueue(object : Callback<ApiResponse<Studio>> {

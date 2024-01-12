@@ -22,10 +22,8 @@ class MidtransController {
                     phone = "08123456789",
                 )
             )
-            StudioScheduleController.insertStudioSchedule(jwt, studioid = item.id, bookdate = item.date, price = item.price, start_time = item.startTime, end_time = item.endTime, status = "pending", userid = userID.toString()) {it
-                if (it != null) {
-                    println(it.data)
-                }
+            StudioScheduleController.insertStudioSchedule(jwt, studioid = item.id, bookdate = item.date, price = item.price, start_time = item.startTime, end_time = item.endTime, status = "pending", userid = userID.toString(), prefMan) {it
+
                 snapService.getSnapToken(SnapData(transactionData)).enqueue(object : Callback<SnapToken> {
                     override fun onResponse(call: Call<SnapToken>, response: Response<SnapToken>): Unit =
                         if (response.isSuccessful) {

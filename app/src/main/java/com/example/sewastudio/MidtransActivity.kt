@@ -23,7 +23,6 @@ class MidtransActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val snapToken = intent.getStringExtra("snapToken")
         val studioschedule = intent.getStringExtra("studioschedule")
-        println(studioschedule+"this is studio schedule")
         val jwt = intent.getStringExtra("jwt")
         if (jwt == null || snapToken == null) {
             Intent(this, MainActivity::class.java).also {
